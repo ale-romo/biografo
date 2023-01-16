@@ -1,6 +1,7 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
+import useEscape from "lib/hooks/useEscape";
 
 interface NavProps {
   active: boolean;
@@ -18,7 +19,7 @@ const StyledHamburgerButton = styled.button<NavProps>`
   &:before, &:after {
     content: '';
     background: white;
-    left:20%;
+    left:25%;
     width: 60%;
     height: 4px;
     position: absolute;
@@ -27,11 +28,11 @@ const StyledHamburgerButton = styled.button<NavProps>`
   }
   &:before {
     top: 13px;
-    transform: rotate(${p => p.active ? '-45deg' : 0}) translateY(${p => p.active ? '7px' : 0});
+    transform: rotate(${p => p.active ? '-45deg' : 0}) translate(-2px, ${p => p.active ? '5px' : 0});
   }
   &:after {
     bottom: 13px;
-    transform: rotate(${p => p.active ? '45deg' : 0}) translateY(${p => p.active ? '-7px' : 0});;
+    transform: rotate(${p => p.active ? '45deg' : 0}) translate(-2px, ${p => p.active ? '-5px' : 0});;
   }
 `;
 
@@ -72,8 +73,8 @@ interface Props {
 
 const Nav = (Props: Props) => {
   const [active, setActive] = useState(false);
-
-  useLayoutEffect(() => {
+  useEscape(() => !active && setActive(false));
+  useEffect(() => {
     const body = document.querySelector('body');
     if (body) {
       if (active) {
@@ -86,7 +87,9 @@ const Nav = (Props: Props) => {
   return <>
       <StyledNav active={active}>
       {Props.items.map((item: Item, i) => <li key={i}>
-        <Link href={item.url} title={item.title}>{item.title}</Link>
+        <Link href={item.url} title={item.title}>
+          <a href={item.url} onClick={() => setActive(false)}>{item.title}</a>
+        </Link>
       </li>)}
     </StyledNav>
     <StyledHamburgerButton active={active} onClick={() => setActive(!active)} />

@@ -2,7 +2,6 @@ import styled, { createGlobalStyle } from "styled-components";
 import Nav from "components/Nav/Nav";
 
 export const GlobalStyle = createGlobalStyle`
-    // this is the shared style
   html {
     box-sizing: border-box;
   }
@@ -12,12 +11,6 @@ export const GlobalStyle = createGlobalStyle`
   *::after {
     box-sizing: inherit;
   }
-
-h1 {
-    color: yellow !important; // the important is just to show that the style works!
-}
-
-  // anything else you would like to include
 `;
 
 const StyledHeader = styled.header`
@@ -26,10 +19,18 @@ const StyledHeader = styled.header`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index:2;
   h2 {
     margin: 5px 0 0 10px;
   }
 ;`
+const StyledContent = styled.div`
+  margin-top: 41px;
+`;
 
 const BasicLayout = ({ children }: { children: any }) => {
   const navProps = {
@@ -51,7 +52,9 @@ const BasicLayout = ({ children }: { children: any }) => {
       <h2>Biógrafo imaginario</h2>
       <Nav { ...navProps } />
     </StyledHeader>
+    <StyledContent>
       {children}
+    </StyledContent>
     </>
   );
 };

@@ -29,6 +29,7 @@ const StyledHeader = styled.header`
   }
 ;`
 const StyledContent = styled.div`
+position: relative;
   margin-top: 41px;
 `;
 

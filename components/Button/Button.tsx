@@ -1,5 +1,6 @@
 import styled, {css} from 'styled-components';
 import Link from 'next/link';
+import { ReactNode } from 'react';
 
 const ButtonCssProps = css`
 display: inline-block;
@@ -27,18 +28,18 @@ const StyledLink = styled.a`
 type clickAction = () => any;
 
 interface Props {
-  title: string;
   action?: clickAction | string;
   target?: string;
+  children?: ReactNode;
 }
 
-const Button =({title, action, target = '_self'}:Props) => {
+const Button =({ action, target = '_self', children }:Props) => {
   if(typeof action === 'string') {
     return <Link href={action} passHref>
-      <StyledLink target={target}>{title}</StyledLink>
+      <StyledLink target={target}>{children}</StyledLink>
     </Link>
   } else {
-    return <StyledButton onClick={action}>{title}</StyledButton>
+    return <StyledButton onClick={action}>{children}</StyledButton>
   }
 }
 

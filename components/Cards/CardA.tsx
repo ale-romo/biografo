@@ -5,11 +5,9 @@ import Button from 'components/Button/Button';
 const StyledCard = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 10px;
+  padding: 10px;
   &:hover {
     background: #EFEFEF;
-  }
-  @media screen and (max-width: 400px) {
   }
 `;
 
@@ -36,14 +34,23 @@ const CardA = ({src, width, height, alt, action}: Props) => {
     title: 'Comprar ahora',
     action: action,
   }
+
+
+  console.log((window.innerWidth -20))
+  console.log(height * (window.innerWidth -20) / width)
   return <StyledCard>
-  <Image src={src} width={width} height={height} alt={alt} layout='fixed' />
+  <Image
+    src={src}
+      width={window.innerWidth - 20 < width ? window.innerWidth - 20 : width}
+      height={window.innerWidth -20 < width ? height * (window.innerWidth -20) / width : height}
+      alt={alt}
+      layout='fixed' />
   <StyledContent>
     <h2>SubtitleStuff</h2>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
     </p>
-    {action && <Button {...buttonProps} />}
+    {action && <Button {...buttonProps}>{alt}</Button>}
   </StyledContent>
 </StyledCard>
 }

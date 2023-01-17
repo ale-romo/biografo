@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import Webcam from 'components/Webcam/Webcam';
 
 interface Props {
   pid: string;
@@ -7,7 +8,10 @@ interface Props {
 const Comprar  = () => {
   const router = useRouter();
   const { pid } = router.query;
-  return <h1>{pid}</h1>
+  return <>
+    <h1>{pid}</h1>
+    <Webcam />
+  </>
 }
 
 export default Comprar;

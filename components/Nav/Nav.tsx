@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { createGlobalStyle} from "styled-components";
 import Link from "next/link";
 import useEscape from "lib/hooks/useEscape";
 
@@ -13,7 +13,8 @@ const StyledHamburgerButton = styled.button<NavProps>`
   width: 40px;
   height: 40px;
   border: none;
-  position: relative;padding: 10px;
+  position: relative;
+  padding: 10px;
   z-index: 2;
   cursor: pointer;
   &:before, &:after {

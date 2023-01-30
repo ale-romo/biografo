@@ -39,25 +39,23 @@ const HomePage = () => {
   if (error2) console.log(error);
 
   const sendProps = (item: any) => {
-    console.log(item)
     Router.push({
-      pathname: `/objeto/${item.title}`,
-      query: {
-        images: item.images,
-        id: item.objectID,
-        title: item.title,
-        description: item.description,
-        history: item.history,
-        isAvailable: !item.isAuction,
-      }
+      pathname: `/objeto/${item.objectID}`,
+      // query: {
+      //   images: item.images,
+      //   id: item.objectID,
+      //   title: item.title,
+      //   description: item.description,
+      //   history: item.history,
+      //   isAvailable: !item.isAuction,
+      // },
     });
   }
   return <>
-  {loading2 &&<Loader>Loading...</Loader>}
+    {loading2 &&<Loader>Loading...</Loader>}
     {data2 &&
       <Carousel title="Artículos Biógrafo">
         {data2.map((item: any, i: number) => {
-          console.log(item)
           const cardProps = {
             src: `https://biografoimaginario.com${JSON.parse(item.images)[0]}`,
             title: item.title,
@@ -66,7 +64,6 @@ const HomePage = () => {
           };
           return <CardB key={i} {...cardProps} />
         })}
-
       </Carousel>
     }
 

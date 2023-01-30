@@ -22,7 +22,6 @@ const VideoRecorder = () => {
   const captureScreenshot = useCallback(() => {
     if (webcamRef?.current?.getScreenshot) {
       const imageSrc: any = webcamRef.current.getScreenshot();
-      console.log(imageSrc)
       setScreenshot(imageSrc);
     }
   }, [webcamRef, setScreenshot]);
@@ -31,7 +30,6 @@ const VideoRecorder = () => {
   const handleDataAvailable = useCallback(
     ({ data }: {data: any}) => {
       if (data.size > 0) {
-        console.log(data)
         setRecordedChunks((prev) => prev.concat(data));
       }
     },
@@ -40,7 +38,6 @@ const VideoRecorder = () => {
 
   const handleStartCaptureClick = useCallback(() => {
     setCapturing(true);
-    console.log(webcamRef)
     if(webcamRef?.current?.stream) {
       mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
         mimeType: 'video/webm',

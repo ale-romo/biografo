@@ -43,6 +43,10 @@ const BasicLayout = ({ children }: { children: any }) => {
       {
         url: '/about',
         title: 'About Us',
+      },
+      {
+        url: '/acerca',
+        title: 'Acerca',
       }
     ]
   }

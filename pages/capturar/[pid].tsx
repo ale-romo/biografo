@@ -5,7 +5,7 @@ interface Props {
   pid: string;
 }
 
-const Comprar  = () => {
+const Capturar  = () => {
   const router = useRouter();
   const { pid } = router.query;
   return <>
@@ -14,4 +14,4 @@ const Comprar  = () => {
   </>
 }
 
-export default Comprar;
+export default Capturar;

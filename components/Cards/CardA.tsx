@@ -27,17 +27,15 @@ interface Props {
   height: number;
   alt: string;
   action?: clickAction | string;
+  buttonText?: string;
 }
 
-const CardA = ({src, width, height, alt, action}: Props) => {
+const CardA = ({src, width, height, alt, action, buttonText = ''}: Props) => {
   const buttonProps = {
     title: 'Comprar ahora',
     action: action,
   }
 
-
-  console.log((window.innerWidth -20))
-  console.log(height * (window.innerWidth -20) / width)
   return <StyledCard>
   <Image
     src={src}
@@ -50,7 +48,7 @@ const CardA = ({src, width, height, alt, action}: Props) => {
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
     </p>
-    {action && <Button {...buttonProps}>{alt}</Button>}
+    {action && <Button {...buttonProps}>{buttonText}</Button>}
   </StyledContent>
 </StyledCard>
 }

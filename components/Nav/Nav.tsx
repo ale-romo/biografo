@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styled, { createGlobalStyle} from "styled-components";
+import styled from "styled-components";
 import Link from "next/link";
 import useEscape from "lib/hooks/useEscape";
 

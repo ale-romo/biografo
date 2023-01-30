@@ -1,16 +1,76 @@
+import styled from 'styled-components';
+import Router from 'next/router';
+import Link from 'next/link';
 import Carousel from 'components/Carousel/Carousel';
 import { useFetch } from 'lib/hooks/useFetch';
 import Card from 'components/Cards/CardA';
+import Modal from 'components/Modal/Modal';
+import CardB from 'components/Cards/CardB';
+import {
+  NegativeText,
+  LargeText,
+  SectionWrapper,
+  Link1,
+} from 'components/TextFormats/TextFormats';
 
+const Loader = styled.div`
+  width: 100%;
+  padding: 100%;
+  font-size: 50px;
+  font-weight: bold;
+  text-align: center;
+`;
+
+const ModalContent = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 15%;
+`;
 
 const HomePage = () => {
   const {data, loading, error} : any = useFetch('https://picsum.photos/v2/list');
-  // const {data2, loading2, error2}: any = useFetch('https://biografoimaginario.com/getAllObjects');
-  // if(data2) console.log(data2);
-  if (error) console.log(error);
+  const {data: data2, loading: loading2, error: error2}: any = useFetch('https://biografoimaginario.com/getAllObjects');
 
+  if (error) console.log(error);
+  if (error2) console.log(error);
+
+  const sendProps = (item: any) => {
+    console.log(item)
+    Router.push({
+      pathname: `/objeto/${item.title}`,
+      query: {
+        images: item.images,
+        id: item.objectID,
+        title: item.title,
+        description: item.description,
+        history: item.history,
+        isAvailable: !item.isAuction,
+      }
+    });
+  }
   return <>
-    {loading &&<div>Loading...</div>}
+  {loading2 &&<Loader>Loading...</Loader>}
+    {data2 &&
+      <Carousel title="Artículos Biógrafo">
+        {data2.map((item: any, i: number) => {
+          console.log(item)
+          const cardProps = {
+            src: `https://biografoimaginario.com${JSON.parse(item.images)[0]}`,
+            title: item.title,
+            sold: item.soldUserId,
+            action: () => sendProps(item),
+          };
+          return <CardB key={i} {...cardProps} />
+        })}
+
+      </Carousel>
+    }
+
+    {/* {loading &&<Loader>Loading...</Loader>}
     {data &&
       <Carousel title="Artículos en venta">
         {data.map((item: any, i: number) => {
@@ -20,16 +80,33 @@ const HomePage = () => {
             height: item.height/10,
             alt: item.author,
             action: `comprar/${item.author}`,
+            buttonText: 'Comprar ahora',
           }
           return <Card key={i} {...cardProps} />
         })
       }
       </Carousel>
-    }
-    <h1>Some more content </h1>
-    <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
+    } */}
+
+    <Modal
+      isOpen={true}
+      timer={5000}
+      contentWidth="100%"
+      contentHeight="100%"
+      showCloseButton={false}
+    >
+      <ModalContent>
+        <p>el autor de esta página está <LargeText>en construcción</LargeText>, vende sus pertenencias a cambio de que reciclen su memoria.</p>
+        <p>todos los objetos aquí publicados están a la venta pero su precio no es dinero, sinó la invención de nuevos recuerdos.</p>
+        <p>hay increibles oportunidades a cero peso.</p>
+        <NegativeText>¡compra yá!</NegativeText>
+      </ModalContent>
+    </Modal>
+    <SectionWrapper>
+      <p>
+        Estos objetos están a la venta. Su precion n es dinero, sino la invención de nuevos recuerdos. ver <Link href='/acerca'><Link1>como funciona</Link1></Link>
+      </p>
+    </SectionWrapper>
   </>
 }
 

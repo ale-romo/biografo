@@ -1,25 +1,26 @@
-import { ReactElement, useRef, useState } from "react";
+import { ReactElement, useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 
 const Header = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  padding: 10px 10px 0;
   @media screen and (min-width: 600px) {
     justify-content: space-between;
   }
   h2 {
-    margin: 0 0 0 20px;
     align-self: center;
+    margin: 0;
   }
 `;
 
 const CarouselControls = styled.div`
-display:none;
+  display:none;
   @media screen and (min-width: 600px) {
     display: flex;
     flex-direction: row;
-    column-gap: 5px;
+    column-gap: 10px;
     z-index: 1;
   }
 
@@ -31,9 +32,11 @@ interface WrapperProps {
 }
 
 const Wrapper = styled.div<WrapperProps>`
+  position: relative;
   &:after, &:before {
     content: '';
     pointer-events: none;
+    position: relative;
     height: 100%;
     width: 50px;
     background: rgb(255,255,255);
@@ -113,24 +116,34 @@ interface Props {
 }
 
 const Carousel = ({ title, children }: Props) => {
-  const carousel = useRef<HTMLInputElement>(null);
-  const [gradientRight, setGradientRight] = useState(true);
-  const [gradientLeft, setGradientLeft] = useState(false);
+  const carousel = useRef<HTMLDivElement>(null);
+  const wrapper = useRef<HTMLDivElement>(null);
+  const [navRight, setNavRight] = useState(false);
+  const [navLeft, setNavLeft] = useState(false);
   const throttleInProgress = useRef<{}>();
+
+  useEffect(() => {
+    if (carousel?.current?.scrollWidth && wrapper?.current?.offsetWidth) {
+      console.log(wrapper)
+      if (wrapper.current.offsetWidth < carousel.current.scrollWidth) {
+        setNavRight(true);
+      }
+    }
+  }, [wrapper]);
 
   const handleScroll = (e: any) => {
     if (throttleInProgress.current) { return };
     throttleInProgress.current = true;
     setTimeout(() => {
       if (e.target.scrollWidth - window.innerWidth - e.target.scrollLeft < 10) {
-        setGradientRight(false);
-      } else if (!gradientRight) {
-        setGradientRight(true);
+        setNavRight(false);
+      } else if (!navRight) {
+        setNavRight(true);
       }
       if (e.target.scrollLeft === 0) {
-        setGradientLeft(false);
-      } else if (!gradientLeft) {
-        setGradientLeft(true);
+        setNavLeft(false);
+      } else if (!navLeft) {
+        setNavLeft(true);
       }
 
 
@@ -169,11 +182,15 @@ const Carousel = ({ title, children }: Props) => {
     <Header>
       <h2>{title}</h2>
       <CarouselControls>
-        <NavButton direction='left' onClick={() => navigateCarousel('left')} />
-        <NavButton direction='right' onClick={() => navigateCarousel('right')} />
+        {navLeft &&
+          <NavButton direction='left' onClick={() => navigateCarousel('left')} />
+        }
+        {navRight &&
+          <NavButton direction='right' onClick={() => navigateCarousel('right')} />
+        }
       </CarouselControls>
       </Header>
-      <Wrapper gradientRight={gradientRight} gradientLeft={gradientLeft}>
+      <Wrapper gradientRight={navRight} gradientLeft={navLeft} ref={wrapper}>
         <Content ref={carousel} onScroll={handleScroll}>
           {children}
         </Content>

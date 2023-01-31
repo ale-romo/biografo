@@ -71,6 +71,7 @@ const VideoRecorder = () => {
       a.setAttribute('style', 'display: none');
       a.href = url;
       //a.download = 'react-webcam-stream-capture.webm';
+      // Edgar: Aquí se ejecuta la función de subir el video
       a.onclick(() => {
         const requestOptions = {
           method: 'POST',

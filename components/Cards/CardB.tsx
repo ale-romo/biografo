@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
-import Link from "next/link";
+import { useEffect, useState } from 'react';
 
 const StyledCard = styled.div`
   display: flex;
@@ -40,16 +40,24 @@ const CardB = ({
   title = '',
   sold = false,
   action
-}: Props) => (
-  <StyledCard>
+}: Props) => {
+  const [responsiveWidth, setResponsiveWidth] = useState(width);
+  const [responsiveHeight, setResponsiveHeight] = useState(height);
+  useEffect(() => {
+    if(window.innerWidth - 20 < width) {
+      setResponsiveWidth(window.innerWidth - 20 );
+      setResponsiveHeight( height * (window.innerWidth -20) / width);
+    }
+  });
+  return <StyledCard>
     <a onClick={action}>
-      <Image
-        src={src}
-        width={window.innerWidth - 20 < width ? window.innerWidth - 20 : width}
-        height={window.innerWidth -20 < width ? height * (window.innerWidth -20) / width : height}
-        alt={title}
-        layout='fixed'
-      />
+        <Image
+          src={src}
+          width={responsiveWidth}
+          height={responsiveHeight}
+          alt={title}
+          layout='fixed'
+        />
       <h3>{title}</h3>
       {sold ?
         <Status color="red">Vendido</Status> :
@@ -57,6 +65,6 @@ const CardB = ({
       }
     </a>
 </StyledCard>
-);
+};
 
 export default CardB;

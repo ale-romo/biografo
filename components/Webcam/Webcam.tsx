@@ -3,6 +3,7 @@ import { useState, useRef, useCallback, SetStateAction } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import Button from 'components/Button/Button';
+import { useFetch } from 'lib/hooks/useFetch';
 
 const Wrapper = styled.div`
   video {
@@ -69,7 +70,15 @@ const VideoRecorder = () => {
       document.body.appendChild(a);
       a.setAttribute('style', 'display: none');
       a.href = url;
-      a.download = 'react-webcam-stream-capture.webm';
+      //a.download = 'react-webcam-stream-capture.webm';
+      a.onclick(() => {
+        const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      });
       a.click();
       window.URL.revokeObjectURL(url);
       setRecordedChunks([]);

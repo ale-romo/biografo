@@ -1,4 +1,4 @@
-import { ReactElement, useState, useLayoutEffect } from "react";
+import { ReactElement, useState, useEffect } from "react";
 import Button from "components/Button/Button";
 import styled from 'styled-components';
 import useEscape from "lib/hooks/useEscape";
@@ -75,7 +75,7 @@ const Modal = ({
   const [open, setOpen] = useState(isOpen);
   useEscape(() => setOpen(false));
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const body = document.querySelector('body');
     if (body) {
       if (open) {
@@ -86,7 +86,7 @@ const Modal = ({
     }
   }, [open]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (timer) {
       setTimeout(() => {
         setOpen(false);

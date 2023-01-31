@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import { useRouter } from 'next/router';
+import probe from 'probe-image-size';
 import Image from "next/image";
 import { useState } from "react";
 import cookie from 'js-cookie';
@@ -18,6 +19,29 @@ const Loader = styled.div`
   text-align: center;
 `;
 
+// export const getStaticProps = async (context) => {
+//   const params = { context };
+//   const res: any = await fetch('http://biografoimaginario.com:8888/getAllObjects');
+//   const data = await res.json();
+//   const item = data.find(((item: { objectID: number; }) => item.objectID === Number(params.pid)));
+//   // const itemsWithImageSizes = await Promise.all(
+//   //   data.map(async (item: any) => {
+//   //     const imageWithSize = {
+//   //       url: `https://biografoimaginario.com${JSON.parse(item.images)[0]}`,
+//   //       size: await probe(`https://biografoimaginario.com${JSON.parse(item.images)[0]}`),
+//   //     }
+//   //     item.imageWithSize = imageWithSize;
+//   //     return item;
+//   //   })
+//   // );
+
+//   return {
+//     props: {
+//       items: itemsWithImageSizes,
+//     }
+//   }
+// }
+
 const PerfilObjeto: NextPage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const session = cookie.get('user');
@@ -25,7 +49,7 @@ const PerfilObjeto: NextPage = () => {
   const { pid } = router.query;
   let item;
 
-  const {data, loading, error}: any = useFetch('https://biografoimaginario.com/getAllObjects');
+  const {data, loading, error}: any = useFetch('http://biografoimaginario.com:8888/getAllObjects');
 
   if (error) console.log(error);
   if (data) {
@@ -40,7 +64,7 @@ const PerfilObjeto: NextPage = () => {
           {JSON.parse(item.images).map((image: string, i : number) => (
             <Image
               key={i}
-              src={`https://biografoimaginario.com${image}`}
+              src={`http://biografoimaginario.com:8888${image}`}
               alt=""
               width={300}
               height={300}

@@ -124,7 +124,6 @@ const Carousel = ({ title, children }: Props) => {
 
   useEffect(() => {
     if (carousel?.current?.scrollWidth && wrapper?.current?.offsetWidth) {
-      console.log(wrapper)
       if (wrapper.current.offsetWidth < carousel.current.scrollWidth) {
         setNavRight(true);
       }

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Router from 'next/router';
 import Link from 'next/link';
+import probe from 'probe-image-size';
 import Carousel from 'components/Carousel/Carousel';
 import { useFetch } from 'lib/hooks/useFetch';
 import Card from 'components/Cards/CardA';
@@ -31,43 +32,19 @@ const ModalContent = styled.div`
   padding: 0 15%;
 `;
 
-const HomePage = () => {
+const HomePage = ({ items }: any) => {
   const {data, loading, error} : any = useFetch('https://picsum.photos/v2/list');
-  const {data: data2, loading: loading2, error: error2}: any = useFetch('https://biografoimaginario.com/getAllObjects');
+
 
   if (error) console.log(error);
-  if (error2) console.log(error);
 
   const sendProps = (item: any) => {
     Router.push({
       pathname: `/objeto/${item.objectID}`,
-      // query: {
-      //   images: item.images,
-      //   id: item.objectID,
-      //   title: item.title,
-      //   description: item.description,
-      //   history: item.history,
-      //   isAvailable: !item.isAuction,
-      // },
     });
   }
   return <>
-    {loading2 &&<Loader>Loading...</Loader>}
-    {data2 &&
-      <Carousel title="Artículos Biógrafo">
-        {data2.map((item: any, i: number) => {
-          const cardProps = {
-            src: `https://biografoimaginario.com${JSON.parse(item.images)[0]}`,
-            title: item.title,
-            sold: item.soldUserId,
-            action: () => sendProps(item),
-          };
-          return <CardB key={i} {...cardProps} />
-        })}
-      </Carousel>
-    }
-
-    {/* {loading &&<Loader>Loading...</Loader>}
+    {loading &&<Loader>Loading...</Loader>}
     {data &&
       <Carousel title="Artículos en venta">
         {data.map((item: any, i: number) => {
@@ -83,7 +60,7 @@ const HomePage = () => {
         })
       }
       </Carousel>
-    } */}
+    }
 
     <Modal
       isOpen={true}

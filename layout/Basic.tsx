@@ -37,7 +37,7 @@ const BasicLayout = ({ children }: { children: any }) => {
   const navProps = {
     items: [
       {
-        url: '/home',
+        url: '/',
         title: 'Home',
       },
       {

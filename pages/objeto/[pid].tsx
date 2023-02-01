@@ -19,56 +19,52 @@ const Loader = styled.div`
   text-align: center;
 `;
 
-// export const getStaticProps = async (context) => {
-//   const params = { context };
-//   const res: any = await fetch('http://biografoimaginario.com:8888/getAllObjects');
-//   const data = await res.json();
-//   const item = data.find(((item: { objectID: number; }) => item.objectID === Number(params.pid)));
-//   // const itemsWithImageSizes = await Promise.all(
-//   //   data.map(async (item: any) => {
-//   //     const imageWithSize = {
-//   //       url: `https://biografoimaginario.com${JSON.parse(item.images)[0]}`,
-//   //       size: await probe(`https://biografoimaginario.com${JSON.parse(item.images)[0]}`),
-//   //     }
-//   //     item.imageWithSize = imageWithSize;
-//   //     return item;
-//   //   })
-//   // );
+export const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: true,
+  }
+}
 
-//   return {
-//     props: {
-//       items: itemsWithImageSizes,
-//     }
-//   }
-// }
+export const getStaticProps = async ({params}: any) => {
+  const res: any = await fetch('http://biografoimaginario.com:8888/getAllObjects');
+  const data = await res.json();
+  const item = data.find(((item: { objectID: number; }) => item.objectID === Number(params.pid)));
+  const images = JSON.parse(item.images);
 
-const PerfilObjeto: NextPage = () => {
+  item.imagesWithSizes = await Promise.all(
+    images.map(async (image: string) => {
+      return {
+        url: `http://biografoimaginario.com:8888/${image}`,
+        size: await probe(`http://biografoimaginario.com:8888/${image}`)
+      }
+    })
+  );
+
+  return {
+    props: {
+      item: item,
+    }
+  }
+}
+
+const PerfilObjeto: NextPage = ({ item }: any) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const session = cookie.get('user');
-  const router = useRouter();
-  const { pid } = router.query;
-  let item;
-
-  const {data, loading, error}: any = useFetch('http://biografoimaginario.com:8888/getAllObjects');
-
-  if (error) console.log(error);
-  if (data) {
-    item = data.find(((item: { objectID: number; }) => item.objectID === Number(pid)));
-  }
 
   return <>
-    {loading && <Loader>Loading...</Loader>}
-    {data &&
+    {item &&
       <>
         <Carousel title={item.title}>
-          {JSON.parse(item.images).map((image: string, i : number) => (
-            <Image
+          {item.imagesWithSizes.map((image: any, i : number) => {
+            return <Image
               key={i}
-              src={`http://biografoimaginario.com:8888${image}`}
+              src={image.url}
               alt=""
-              width={300}
-              height={300}
-            />))}
+              width={image.size.width / 10}
+              height={image.size.height / 10}
+            />
+          })}
         </Carousel>
         <h3>{!item.soldUserId ? 'En venta' : 'Vendido'}</h3>
         <p>{item.description}</p>
@@ -81,7 +77,6 @@ const PerfilObjeto: NextPage = () => {
         }
       </>
     }
-
   </>
 };
 

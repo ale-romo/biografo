@@ -27,9 +27,12 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({params}: any) => {
-  const res: any = await fetch('http://biografoimaginario.com:8888/getAllObjects');
-  const data = await res.json();
-  const item = data.find(((item: { objectID: number; }) => item.objectID === Number(params.pid)));
+  const itemRes: any = await fetch(`http://biografoimaginario.com:8888/getObjects?ID=${params.pid}`);
+  const itemData = await itemRes.json();
+  const item = itemData[0];
+  const videoRes: any =  await fetch(`http://biografoimaginario.com:8888/getVideos?ID=${1}`)
+  const video = await videoRes.json();
+
   const images = JSON.parse(item.images);
 
   item.imagesWithSizes = await Promise.all(
@@ -44,13 +47,16 @@ export const getStaticProps = async ({params}: any) => {
   return {
     props: {
       item: item,
+      video: video,
     }
   }
 }
 
-const PerfilObjeto: NextPage = ({ item }: any) => {
+const PerfilObjeto: NextPage = ({ item, video }: any) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const session = cookie.get('user');
+
+  console.log(video)
 
   return <>
     {item &&
@@ -69,6 +75,10 @@ const PerfilObjeto: NextPage = ({ item }: any) => {
         <h3>{!item.soldUserId ? 'En venta' : 'Vendido'}</h3>
         <p>{item.description}</p>
         <p>{item.history}</p>
+        <h2>Video</h2>
+        <video>
+          <source src={`http://biografoimaginario.com:8888${video[0].videoURL}`} />
+        </video>
         {session ?
           <Button action={`/capturar/${item.objectID}`}>Comprar ahora</Button> :
           <Modal triggerText="Regístrate para comprar" isOpen={modalIsOpen}>

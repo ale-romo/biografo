@@ -79,12 +79,19 @@ const Content = styled.div`
   }
 `;
 
+interface NavProps {
+  direction: 'left' | 'right';
+  active: boolean;
+}
+
 const NavButton = styled.button<NavProps>`
+  opacity: ${p => p.active ? 1 : 0};
   width: 60px;
   height: 60px;
   background: black;
   border:none;
   position: relative;
+  transition: opacity .3s;
   cursor: pointer;
   &:before {
     content: '';
@@ -105,10 +112,6 @@ const NavButton = styled.button<NavProps>`
     }
   }
 `;
-
-interface NavProps {
-  direction: 'left' | 'right';
-}
 
 interface Props {
   title: string;
@@ -181,12 +184,8 @@ const Carousel = ({ title, children }: Props) => {
     <Header>
       <h2>{title}</h2>
       <CarouselControls>
-        {navLeft &&
-          <NavButton direction='left' onClick={() => navigateCarousel('left')} />
-        }
-        {navRight &&
-          <NavButton direction='right' onClick={() => navigateCarousel('right')} />
-        }
+          <NavButton active={navLeft} direction='left' onClick={() => navigateCarousel('left')} />
+          <NavButton active={navRight} direction='right' onClick={() => navigateCarousel('right')} />
       </CarouselControls>
       </Header>
       <Wrapper gradientRight={navRight} gradientLeft={navLeft} ref={wrapper}>

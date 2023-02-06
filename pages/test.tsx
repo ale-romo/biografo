@@ -63,11 +63,12 @@ const HomePage = ({ items }: any) => {
     }
 
     <Modal
-      isOpen={true}
-      timer={5000}
-      contentWidth="100%"
-      contentHeight="100%"
-      showCloseButton={false}
+      // isOpen={true}
+      // timer={5000}
+      // contentWidth="100%"
+      // contentHeight="100%"
+      // showCloseButton={false}
+      triggerText="Open modal"
     >
       <ModalContent>
         <p>el autor de esta página está <LargeText>en construcción</LargeText>, vende sus pertenencias a cambio de que reciclen su memoria.</p>

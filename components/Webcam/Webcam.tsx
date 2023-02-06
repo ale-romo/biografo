@@ -70,16 +70,16 @@ const VideoRecorder = () => {
       document.body.appendChild(a);
       a.setAttribute('style', 'display: none');
       a.href = url;
-      //a.download = 'react-webcam-stream-capture.webm';
-      // Edgar: Aquí se ejecuta la función de subir el video
-      a.onclick(() => {
-        const requestOptions = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-      });
+      a.download = 'react-webcam-stream-capture.webm';
+      // Edgar: Aquí se ejecuta la función de subir el
+      // a.onclick(() => {
+      //   const requestOptions = {
+      //     method: 'POST',
+      //     headers: {
+      //       'Content-Type': 'application/json'
+      //     }
+      //   }
+      // });
       a.click();
       window.URL.revokeObjectURL(url);
       setRecordedChunks([]);

@@ -56,8 +56,6 @@ const PerfilObjeto: NextPage = ({ item, video }: any) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const session = cookie.get('user');
 
-  console.log(video)
-
   return <>
     {item &&
       <>

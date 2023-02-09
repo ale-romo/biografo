@@ -13,6 +13,7 @@
   "dependencies": {
     "graphql": "^16.5.0",
     "graphql-request": "^4.3.0",
+    "jquery": "^3.6.3",
     "js-cookie": "^3.0.1",
     "next": "12.2.0",
     "probe-image-size": "^7.2.3",
@@ -31,6 +32,7 @@
     "@storybook/manager-webpack5": "^6.5.9",
     "@storybook/react": "^6.5.9",
     "@storybook/testing-library": "^0.0.13",
+    "@types/jquery": "^3.5.16",
     "@types/js-cookie": "^3.0.2",
     "@types/node": "18.0.3",
     "@types/probe-image-size": "^7.2.0",

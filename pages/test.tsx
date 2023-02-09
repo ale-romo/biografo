@@ -63,11 +63,11 @@ const HomePage = ({ items }: any) => {
     }
 
     <Modal
-      // isOpen={true}
-      // timer={5000}
-      // contentWidth="100%"
-      // contentHeight="100%"
-      // showCloseButton={false}
+      isOpen={true}
+      timer={5000}
+      contentWidth="100%"
+      contentHeight="100%"
+      showCloseButton={false}
       triggerText="Open modal"
     >
       <ModalContent>

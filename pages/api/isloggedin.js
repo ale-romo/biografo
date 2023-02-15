@@ -1,18 +1,16 @@
-const nextConnect       = require('next-connect');
+import nextConnect from 'next-connect'
+import auth from '../../middleware/auth'
 
-var passport 			= require('passport');
-var session 			= require('express-session');
-var cookieParser 		= require('cookie-parser');
+const handler = nextConnect();
+
 var cookiesNext        = require('cookies-next');
 
-var passport = require('../../lib/passport.js');
-
-export default nextConnect()
+handler.use(auth)
     .get((req, res, next) => {
-            console.log(cookiesNext.getCookie('isloggedin', {req,res}));
-            console.log(req.user);
+            res.json(req.session || {isloggedin: false});
         });	
     
+        export default handler
 
 // next.prepare().then(() => {
 //     const app = express();

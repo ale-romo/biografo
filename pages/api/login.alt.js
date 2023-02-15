@@ -1,21 +1,38 @@
-import nextConnect from 'next-connect'
-import auth from '../../middleware/auth'
+import { setCookies } from 'cookies-next';
+import session from '../../lib/session';
 
-const handler           = nextConnect();
-var passport            = require('../../lib/passport.js');
-var cookiesNext         = require('cookies-next');
 
-handler.use(auth)
+const nextConnect       = require('next-connect');
+
+var passport 			= require('passport');
+var cookieParser 		= require('cookie-parser');
+var cookiesNext        = require('cookies-next');
+
+var passport = require('../../lib/passport.js');
+
+export default nextConnect()
+    .use(cookieParser())
+    .use(session({
+                name: 'session',
+                secret: "genericnonrandomstring",
+                saveUninitialized: true,
+                resave: true,
+                cookie: {secure: process.env.NODE_ENV === 'production', httpOnly: false, path: '/', maxAge: 259200000, sameSite='lax'}
+    }))
+    .use(passport.initialize())
+    .use(passport.session())
     .get(passport.authenticate('local-login', { failureRedirect : '/login.html'}), (req, res) => {
-        cookiesNext.setCookie('isloggedin', 'true', {req, res});
-        res.json(req.session);
+        cookiesNext.setCookie('user', req.user, {req, res})
+        cookiesNext.setCookie('isloggedin', 'true', {req, res})
+        console.log(cookiesNext.getCookies({req,res}))
+        res.redirect('/');
     })
     .post(passport.authenticate('local-login', { failureRedirect : '/login.html'}), (req, res) => {
-        cookiesNext.setCookie('isloggedin', 'true', {req, res});
-        res.json(req.session);
+        cookiesNext.setCookie('isloggedin', 'true', {req, res})
+        console.log(cookiesNext.getCookies({req,res}))
+        res.redirect('/');
     })
     
-export default handler
 
 // next.prepare().then(() => {
 //     const app = express();

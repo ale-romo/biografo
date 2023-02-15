@@ -11,6 +11,7 @@
     "build-storybook": "build-storybook -s public"
   },
   "dependencies": {
+    "@hapi/iron": "^7.0.1",
     "cookie-cutter": "^0.2.0",
     "cookie-parser": "^1.4.6",
     "cookies": "^0.8.0",
@@ -28,7 +29,7 @@
     "next-connect": "^0.13.0",
     "next-session": "^4.0.5",
     "nextjs-cors": "^2.1.2",
-    "passport": "^0.6.0",
+    "passport": "^0.5.3",
     "passport-local": "^1.0.0",
     "probe-image-size": "^7.2.3",
     "react": "^18.2.0",

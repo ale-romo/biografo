@@ -5,13 +5,10 @@ const handler = nextConnect();
 const cookiesNext = require('cookies-next');
 
 handler.use(auth)
-    .get((req, res, next) => {
-            req.logout((err) => {
-                if (err) {return next(err)}
-                cookiesNext.deleteCookie('isloggedin', {req, res})
-                res.redirect('/')
-            });
-        });	
+    .post((req, res, next) => {
+        req.logout() ;
+        res.json({'isloggedin':req.isAuthenticated()})
+    });	
     
 export default handler
 

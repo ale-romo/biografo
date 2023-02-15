@@ -7,8 +7,11 @@ var cookiesNext        = require('cookies-next');
 
 handler.use(auth)
     .get((req, res, next) => {
-            res.json(req.session || {isloggedin: false});
-        });	
+        res.json({isloggedin: req.isAuthenticated()});
+    })
+    .post((req, res, next) => {
+        res.json({isloggedin: req.isAuthenticated()});
+    });	
     
         export default handler
 

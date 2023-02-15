@@ -10,12 +10,14 @@ var cookiesNext        = require('cookies-next');
 var passport = require('../../lib/passport.js');
 
 handler.use(auth)
-    .get(passport.authenticate('local-signup',{
-        		failureRedirect : '/signup.html'
-        	}), (req,res) => {
-                cookiesNext.setCookie('isloggedin', 'true', {req, res})
-                res.json(req.session);
-    });
+    // .get(passport.authenticate('local-signup',{}), (req,res) => {
+    //     cookiesNext.setCookie('isloggedin', 'true', {req, res});
+    //     res.json(req.session);
+    // })
+    .post(passport.authenticate('local-signup',{}), (req,res) => {
+        cookiesNext.setCookie('isloggedin', 'true', {req, res});
+        res.json(req.session);
+    })
 
 export default handler
 

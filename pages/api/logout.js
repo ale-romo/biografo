@@ -6,8 +6,9 @@ const cookiesNext = require('cookies-next');
 
 handler.use(auth)
     .post((req, res, next) => {
-        req.logout() ;
-        res.json({'isloggedin':req.isAuthenticated()})
+        req.logout();
+        delete req.session;
+        res.json({'isloggedin':req.isAuthenticated()});
     });	
     
 export default handler

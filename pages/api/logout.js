@@ -7,8 +7,13 @@ const cookiesNext = require('cookies-next');
 handler.use(auth)
     .post((req, res, next) => {
         req.logout();
+        //TODO delete cookie
+        //Todo contarle a Lia cosas art[isticas y musicales]
+        cookiesNext.deleteCookie('session')
         delete req.session;
+        req.session = {};
         res.json({'isloggedin':req.isAuthenticated()});
+
     });	
     
 export default handler

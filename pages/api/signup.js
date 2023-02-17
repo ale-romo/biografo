@@ -1,5 +1,6 @@
 import nextConnect from 'next-connect'
 import auth from '../../middleware/auth'
+var cookiesNext         = require('cookies-next');
 
 const handler = nextConnect();
 

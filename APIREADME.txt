@@ -9,8 +9,8 @@ API endpoints:
 USE {credentials: 'include'}
 Inputs:
 { 
-    username: text, // An email address to contact the user
-    password: text, // The password
+    username: Str, // An email address to contact the user
+    password: Str, // The password
 }
 Outputs:
 JSON with req.session. Example output:
@@ -35,14 +35,17 @@ POST fetch('/api/login', {
     })
 }).then((res) => {console.log(res)})
 
+
+
+
 ========================================
 /api/signup (post)
 ========================================
 USE {credentials: 'include'}
 Inputs:
 { 
-    username: text, // An email address to contact the user
-    password: text, // The password
+    username: Str, // An email address to contact the user
+    password: Str, // The password
 }
 Outputs:
 JSON with req.session. Example output:
@@ -66,6 +69,9 @@ POST fetch('/api/signup', {
     })
 }).then((res) => {console.log(res)})
 
+
+
+
 ========================================
 /api/isloggedin (get, post)
 ========================================
@@ -88,6 +94,9 @@ POST fetch('/api/isloggedin', {
     credentials: 'include'
 }).then((res) => {res.json().then((data) => {console.log(data)})})
 
+
+
+
 ========================================
 /api/logout (post - expects AJAX)
 ========================================
@@ -106,3 +115,56 @@ POST fetch('/api/logout', {
     credentials: 'include'
 }).then((res) => {res.json().then((data) => {console.log(data)})})
 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+========================================
+:8888/sell (post AJAX or HTMLRequest)
+========================================
+Inputs:
+
+
+1) name:               (Str) Nombre del objeto a vender
+2) uid:     (int) El ID del usuario ligado al objeto. Se puede conseguir con:
+
+const req = await fetch('/api/isloggedin', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    credentials: 'include'
+});
+const sessionjson = await req.json();
+const uid = sessionjson.session.passport.user;
+
+3) isAuction:          (int) 1 or 0 para ver si es subasta
+4) description:        (Str)
+5) story:              (Str) historia del objeto
+6) endDate:            (Date formatted in ISO8601, such as given by:)
+<input type="date" required="" name="endDate">
+7) Files: Los archivos para cargar (Se ponen automáticamente en el form al subir, no requiren nombre)
+
+NOTA: Se require endDate AUNQUE no sea subasta.
+
+Outpus:
+JSON con success: true o false y error si es pertinente
+
+
+
+
+========================================
+:8888/upload (post AJAX or HTMLRequest)
+========================================
+input:
+1) uid:             (int) Numero identificador del objeto
+2) objectID:        (int) Numero identificador del objeto al cual se sube el video
+3) description:     (Str) Descripción del video
+4) title:           (Str) Título del video
+5) tags:            (Str) Tags, separados por espacios o comas. No tiene procesamiento en backend.
+6) Files: Archivo codificado en Datastream
+
+output:
+JSON con success: true o false y error si es pertinente

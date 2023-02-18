@@ -9,7 +9,6 @@ handler.use(auth)
     .get((req, res, next) => {
         passport.authenticate('local-login', (err, user) => {
             if (!user){
-                console.log(`test${err}`);
                 res.json({isloggedin:false, error:req.err});
             } else if(user){
                 req.login(user, (err) => {

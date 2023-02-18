@@ -1,5 +1,6 @@
 import nextConnect from 'next-connect'
 import auth from '../../middleware/auth'
+var cookiesNext         = require('cookies-next');
 
 const handler = nextConnect();
 
@@ -10,13 +11,22 @@ var cookiesNext        = require('cookies-next');
 var passport = require('../../lib/passport.js');
 
 handler.use(auth)
-    // .get(passport.authenticate('local-signup',{}), (req,res) => {
-    //     cookiesNext.setCookie('isloggedin', 'true', {req, res});
-    //     res.json(req.session);
-    // })
-    .post(passport.authenticate('local-signup',{}), (req,res) => {
-        cookiesNext.setCookie('isloggedin', 'true', {req, res});
-        res.json(req.session);
+    .post((req, res, next) => {
+        passport.authenticate('local-signup', (err, user) => {
+            if (!user){
+                console.log(`test${err}`);
+                res.json({isloggedin:false, error:req.err});
+            } else if(user){
+                req.login(user, (err) => {
+                    if (err){
+                        console.log(err);
+                        return next(err);
+                    }
+                    cookiesNext.setCookie('isloggedin', 'true', {req, res});
+                    res.json(req.session);
+                })
+            }
+        })(req, res, next);
     })
 
 export default handler

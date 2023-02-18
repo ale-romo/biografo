@@ -65,23 +65,29 @@ const VideoRecorder = () => {
       const blob = new Blob(recordedChunks, {
         type: 'video/webm',
       });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      document.body.appendChild(a);
-      a.setAttribute('style', 'display: none');
-      a.href = url;
-      a.download = 'react-webcam-stream-capture.webm';
-      // Edgar: Aquí se ejecuta la función de subir el
-      // a.onclick(() => {
-      //   const requestOptions = {
-      //     method: 'POST',
-      //     headers: {
-      //       'Content-Type': 'application/json'
-      //     }
-      //   }
-      // });
-      a.click();
-      window.URL.revokeObjectURL(url);
+      let body = {
+        title: 'title',
+        description: 'description',
+        uid: '1',
+        objectID: '1',
+        tags: JSON.stringify(['lorem','ipsum','prueba'])
+      }
+      let formData = new FormData();
+      for (const [key, value] of Object.entries(body)){
+        formData.append(key,value);
+      }
+      formData.append("blob", blob, 'video');
+      console.log(formData)
+
+      fetch('http://biografoimaginario.com:8888/upload', {
+        method: 'POST',
+        body: formData,
+        mode: 'cors',
+        credentials: 'omit',
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        }
+      })
       setRecordedChunks([]);
     }
   }, [recordedChunks]);
@@ -90,6 +96,7 @@ const VideoRecorder = () => {
     <Webcam
       ref={webcamRef}
       screenshotFormat="image/jpeg"
+      audio={true}
     />
     {capturing ? (
       <Button action={handleStopCaptureClick}>Stop Capture</Button>

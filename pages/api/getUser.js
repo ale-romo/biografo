@@ -10,6 +10,8 @@ const handler = nextConnect();
 handler.use(auth)
     .get((req, res, next) => {
 		userDB.getUserByID(parseInt(req.query.uid)).then((ans) => {
+            delete ans.password;
+            delete ans.salt;
             res.json(ans);
         });
     })

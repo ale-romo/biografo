@@ -15,6 +15,10 @@ const ButtonCssProps = css`
     background: pink;
     color: black;
   }
+  &:disabled {
+    background-color: gray;
+    color: white;
+  }
 `;
 
 const StyledButton = styled.button`
@@ -57,15 +61,16 @@ interface Props {
   target?: string;
   children?: ReactNode;
   type?: 'close' | null;
+  disabled?: boolean;
 }
 
-const Button =({ action, target = '_self', children, type }:Props) => {
+const Button =({ action, target = '_self', children, type, disabled = false }:Props) => {
   if(typeof action === 'string') {
     return <Link href={action} passHref>
       <StyledLink target={target}>{children}</StyledLink>
     </Link>
   } else {
-    return <StyledButton onClick={action}>
+    return <StyledButton onClick={action} disabled={disabled}>
       {type === 'close' &&
         <CloseIcon />
       }

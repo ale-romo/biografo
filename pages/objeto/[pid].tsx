@@ -8,7 +8,7 @@ import styled from "styled-components";
 import { useFetch } from 'lib/hooks/useFetch';
 import Button from "components/Button/Button";
 import Modal from "components/Modal/Modal";
-import SignIn from "components/SignIn/SignIn";
+import SignIn from "components/Session/Session";
 import Carousel from "components/Carousel/Carousel";
 
 const Loader = styled.div`
@@ -75,7 +75,7 @@ const PerfilObjeto: NextPage = ({ item, video }: any) => {
         <p>{item.history}</p>
         <h2>Video</h2>
         <video>
-          <source src={`http://biografoimaginario.com:8888${video[0].videoURL}`} />
+          {/* <source src={`http://biografoimaginario.com:8888${video[0].videoURL}`} /> */}
         </video>
         {session ?
           <Button action={`/capturar/${item.objectID}`}>Comprar ahora</Button> :

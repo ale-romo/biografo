@@ -19,3 +19,10 @@ export const Link1 = styled.a`
   color: white;
   cursor: pointer;
 `;
+
+export const LoginInput = styled.input`
+  padding: 19px;
+  background: white;
+  border-radius: 0;
+  border: 1px solid #dedede;
+`;

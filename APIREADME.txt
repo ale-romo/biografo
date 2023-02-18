@@ -33,7 +33,7 @@ POST fetch('/api/login', {
         username: 'lorem@ipsum.com',
         password: 'asdfasdf',
     })
-}).then((res) => {console.log(res)})
+}).then((res) => {res.json().then((data) => {console.log(data)})})
 
 
 

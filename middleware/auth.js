@@ -2,7 +2,13 @@ import nextConnect from 'next-connect'
 import passport from '../lib/passport'
 import session from '../lib/session'
 
-const auth = nextConnect()
+function onError(err, req, res, next){
+    console.log('error')
+    res.json({error: err, isloggedin: req.isAuthenticated()})
+
+}
+
+const auth = nextConnect({onError: onError})
     .use(
         session({
             name: 'session',

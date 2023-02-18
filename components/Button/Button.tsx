@@ -70,7 +70,7 @@ const Button =({ action, target = '_self', children, type, disabled = false }:Pr
       <StyledLink target={target}>{children}</StyledLink>
     </Link>
   } else {
-    return <StyledButton onClick={action} disabled={disabled}>
+    return <StyledButton type ="button" onClick={action} disabled={disabled}>
       {type === 'close' &&
         <CloseIcon />
       }

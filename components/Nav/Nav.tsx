@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import useEscape from "lib/hooks/useEscape";
+import { useUser } from 'components/Session/user';
 
 interface NavProps {
   active: boolean;
@@ -85,6 +86,10 @@ const Nav = (Props: Props) => {
       }
     }
   }, [active]);
+
+  const user = useUser();
+  console.log(user)
+
   return <>
       <StyledNav active={active}>
       {Props.items.map((item: Item, i) => <li key={i}>
@@ -92,6 +97,7 @@ const Nav = (Props: Props) => {
           <a href={item.url} onClick={() => setActive(false)}>{item.title}</a>
         </Link>
       </li>)}
+      {user.username}
     </StyledNav>
     <StyledHamburgerButton active={active} onClick={() => setActive(!active)} />
   </>

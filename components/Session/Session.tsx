@@ -71,17 +71,17 @@ const Session = ({ cb }:any) => {
 
   const signUp = async () => {
     try {
-      let response = await fetch('/api/login', {
+      let response = await fetch('/api/signup', {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',
       },
         credentials: 'include',
         body: JSON.stringify({
-            username: {signUpUserName},
-            password: {signUpPassword},
+            username: signUpUserName,
+            password: signUpPassword,
         })
-    })
+      });
 
       const data  =  await response.json()
       console.log(data);
@@ -102,8 +102,8 @@ const Session = ({ cb }:any) => {
       },
         credentials: 'include',
         body: JSON.stringify({
-            username: {signInUserName},
-            password: {signInPassword},
+            username: signInUserName,
+            password: signInPassword,
         })
     })
 
@@ -127,7 +127,7 @@ const Session = ({ cb }:any) => {
           Soy un robot
           <Robot checked={!humanity} onClick={() => setHumanity(!humanity)}/>
         </RobotContainer>
-        <Button action={signUp} disabled={humanity}>Iniciar Sesión</Button>
+        <Button action={signUp} disabled={humanity}>Crear cuenta</Button>
       </Form>
     </div>
     <Divider />
@@ -136,7 +136,7 @@ const Session = ({ cb }:any) => {
       <Form>
         <LoginInput type="text" onChange={(e) => setSignInUserName(e.target.value)} value={signInUserName}/>
         <LoginInput type="password" onChange={(e) => setSignInPassword(e.target.value)} value={signInPassword} />
-        <Button action={signIn}>Iniciar Sesión</Button>
+        <Button action={signIn}>Iniciar sesión</Button>
       </Form>
     </div>
   </Container>

@@ -13,8 +13,8 @@ var passport = require('../../lib/passport.js');
 handler.use(auth)
     .post((req, res, next) => {
         passport.authenticate('local-signup', (err, user) => {
-            if (!user){
-                console.log(`test${err}`);
+            if (!user) {
+                // console.log(`test${err}`);
                 res.json({isloggedin:false, error:req.err});
             } else if(user){
                 req.login(user, (err) => {
@@ -74,7 +74,7 @@ export default handler
 // 		req.logout();
 // 		res.redirect(req.session.returnTo || "/");
 // 		delete req.session.returnTo;
-// 	});	
+// 	});
 
 //     app.listen(3000, (err) => {
 //         if(err) throw err;

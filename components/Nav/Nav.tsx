@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import useEscape from "lib/hooks/useEscape";
-import { useUser } from 'components/Session/user';
+import { userContext } from 'components/Session/user';
+import Cookies from "js-cookie";
 
 interface NavProps {
   active: boolean;
@@ -74,6 +75,7 @@ interface Props {
 }
 
 const Nav = (Props: Props) => {
+  const [user, setUser] = useContext(userContext);
   const [active, setActive] = useState(false);
   useEscape(() => !active && setActive(false));
   useEffect(() => {
@@ -87,8 +89,26 @@ const Nav = (Props: Props) => {
     }
   }, [active]);
 
-  const user = useUser();
-  console.log(user)
+  const logout = async () => {
+    try {
+      await fetch('/api/logout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include'
+      });
+      Cookies.set('user', '', { expires: 0 });
+      Cookies.set('session', '', { expires: 0 });
+      setUser = {
+        id: '',
+        username: '',
+      }
+      setActive(false);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return <>
       <StyledNav active={active}>
@@ -97,7 +117,9 @@ const Nav = (Props: Props) => {
           <a href={item.url} onClick={() => setActive(false)}>{item.title}</a>
         </Link>
       </li>)}
-      {user.username}
+      {user?.username &&
+        <button onClick={() => logout()}>Cerrar sesión</button>
+      }
     </StyledNav>
     <StyledHamburgerButton active={active} onClick={() => setActive(!active)} />
   </>

@@ -2,35 +2,37 @@ import {createContext, useState, useEffect, useContext} from 'react';
 import Cookies from 'js-cookie';
 
 const defaultValues = {
+  id: '',
   username: '',
 };
 
 type AuthenticatedUser = typeof defaultValues
 
-const Context = createContext<AuthenticatedUser>(defaultValues);
+export const userContext = createContext<AuthenticatedUser>(defaultValues);
 
 const Provider = ({ children }: any) => {
   const [user, setUser] = useState<AuthenticatedUser>(defaultValues);
 
-  const userId = Cookies.get('userId');
+  const userId = Cookies.get('user');
 
   useEffect(() => {
-    if (true) {
+    if (userId) {
       const response = async () => {
-        const res = await fetch(`http://localhost:3000/api/getUser?uid=1`);
+        const res = await fetch(`http://localhost:3000/api/getUser?uid=${userId}`);
         const data = await res.json();
-        console.log(data)
-        return data;
+        setUser({
+          ...user,
+          id: userId,
+          username: data.username,
+        });
       }
       response();
-    } else {
-      setUser({ username: 'user@domain.com'});
     }
-  }, []);
+  }, [userId, user]);
 
-  return <Context.Provider value={user}>{children}</Context.Provider>
+  return <userContext.Provider value={user}>{children}</userContext.Provider>
 };
 
-export const useUser = () => useContext(Context);
+export const useUser = () => useContext(userContext);
 
 export default Provider;

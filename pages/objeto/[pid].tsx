@@ -1,11 +1,9 @@
 import { NextPage } from "next";
-import { useRouter } from 'next/router';
 import probe from 'probe-image-size';
 import Image from "next/image";
 import { useState } from "react";
 import cookie from 'js-cookie';
 import styled from "styled-components";
-import { useFetch } from 'lib/hooks/useFetch';
 import Button from "components/Button/Button";
 import Modal from "components/Modal/Modal";
 import SignIn from "components/Session/Session";

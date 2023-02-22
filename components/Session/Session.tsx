@@ -1,6 +1,8 @@
+import { useState, useContext } from "react";
+import { userContext } from "./user";
 import Button from "components/Button/Button";
 import {LoginInput} from 'components/TextFormats/TextFormats';
-import { useState } from "react";
+import Cookies from "js-cookie";
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -63,6 +65,7 @@ const Form = styled.form`
 `;
 
 const Session = ({ cb }:any) => {
+  const [user, setUser] = useContext(userContext);
   const [signUpUserName, setSignUpUserName] = useState('');
   const [signUpPassword, setSignUpPassword] = useState('');
   const [signInUserName, setSignInUserName] = useState('');
@@ -83,14 +86,22 @@ const Session = ({ cb }:any) => {
         })
       });
 
-      const data  =  await response.json()
-      console.log(data);
+      const data  =  await response.json();
+      if (data?.passport?.user) {
+        Cookies.set('user', data.passport.user, { expires: 100});
+        setUser({
+          ...user,
+          userId: data.passport.user,
+        });
+      }
 
+      console.log(user);
+
+      cb(false);
     } catch (error) {
       console.error(error);
     }
-    cb();
-    // cookie.set('user', 'alex', { expires: 100 });
+
   };
 
   const signIn = async () => {
@@ -107,14 +118,12 @@ const Session = ({ cb }:any) => {
         })
     })
 
-      const data  =  await response.json()
-      console.log(data);
+      const data  =  await response.json();
 
     } catch (error) {
       console.error(error);
     }
     cb();
-    // cookie.set('user', 'alex', { expires: 100 });
   };
 
   return <Container>

@@ -10,10 +10,15 @@ const handler = nextConnect();
 handler.use(auth)
     .get((req, res, next) => {
 		userDB.getUserByID(parseInt(req.query.uid)).then((ans) => {
-            delete ans.password;
-            delete ans.salt;
-            res.json(ans);
+            if(ans){
+                delete ans.password;
+                delete ans.salt;
+                res.json(ans);
+            } else {
+                res.json({error: 'No existe un usuario con ese uid.'});
+            }
+            
         });
     })
     
-        export default handler
+    export default handler

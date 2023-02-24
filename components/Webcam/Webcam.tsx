@@ -122,10 +122,10 @@ const VideoRecorder = () => {
       </>
     )}
     <br />
-    <Button action={captureScreenshot}>Take photo</Button>
+    {/* <Button action={captureScreenshot}>Take photo</Button>
     {screenshot &&
       <Image src={screenshot} alt="test" width={400} height="280"/>
-    }
+    } */}
   </Wrapper>
 };
 

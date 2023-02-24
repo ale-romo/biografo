@@ -112,10 +112,10 @@ const VideoRecorder = () => {
       videoConstraints={{facingMode: 'user', }}
     />
     {capturing ? (
-      <Button action={handleStopCaptureClick}>Stop Capture</Button>
+      <Button action={handleStopCaptureClick}>Finalizar Grabación</Button>
     ) : (
       <>
-        <Button action={handleStartCaptureClick}>Start Capture</Button>
+        <Button action={handleStartCaptureClick}>Grabar</Button>
         {recordedChunks.length > 0 && (
           <Button action={handleUpload}>Subir Video</Button>
         )}

@@ -70,7 +70,6 @@ const VideoRecorder = () => {
 
   const handleDownload = useCallback(() => {
     if (recordedChunks.length) {
-      handleStopCaptureClick();
       const blob = new Blob(recordedChunks, {
         type: 'video/webm',
       });
@@ -98,6 +97,7 @@ const VideoRecorder = () => {
         }
       })
       setRecordedChunks([]);
+      handleStopCaptureClick();
     }
   }, [recordedChunks]);
 

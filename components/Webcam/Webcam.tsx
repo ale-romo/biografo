@@ -110,6 +110,7 @@ const VideoRecorder = () => {
       screenshotFormat="image/jpeg"
       audio={true}
       videoConstraints={{facingMode: 'user', }}
+      muted={true}
     />
     {capturing ? (
       <Button action={handleStopCaptureClick}>Finalizar Grabación</Button>

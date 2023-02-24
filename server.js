@@ -1,5 +1,5 @@
-const { createHTTPSServer } = require("https");
-const { createHTTPServer } = require("https");
+const http= require("https");
+const https = require("https");
 
 const { parse } = require("url");
 const next = require('next');
@@ -17,12 +17,12 @@ const httpsOptions = {
 
 app.prepare().then( () => {
     if(dev){
-        createHTTPServer({}, (req, res) => {
+        http.createServer({}, (req, res) => {
             const parsedURL = parse(req.url, true);
             handle(req.res,parsedURL);
         }).listen(3000)
     } else {
-        createHTTPSServer(httpsOptions, (req, res) => {
+        https.createServer(httpsOptions, (req, res) => {
             const parsedURL = parse(req.url, true);
             handle(req.res,parsedURL);
         }).listen(3000)

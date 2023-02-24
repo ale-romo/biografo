@@ -97,9 +97,12 @@ const VideoRecorder = () => {
         }
       })
       setRecordedChunks([]);
-      handleStopCaptureClick();
+      if (mediaRecorderRef.current) {
+        mediaRecorderRef.current.stop();
+        setCapturing(false);
+      }
     }
-  }, [recordedChunks]);
+  }, [recordedChunks, mediaRecorderRef, setCapturing]);
 
   return <Wrapper>
     <Webcam

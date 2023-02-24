@@ -23,13 +23,13 @@ const ModalContent = styled.div`
 `;
 
 export const getStaticProps = async () => {
-  const res: any = await fetch('http://biografoimaginario.com:8888/getAllObjects');
+  const res: any = await fetch('https://biografoimaginario.com:8888/getAllObjects');
   const data = await res.json();
   const itemsWithImageSizes = await Promise.all(
     data.map(async (item: any) => {
       const imageWithSize = {
-        url: `http://biografoimaginario.com:8888${JSON.parse(item.images)[0]}`,
-        size: await probe(`http://biografoimaginario.com:8888${JSON.parse(item.images)[0]}`),
+        url: `https://biografoimaginario.com:8888${JSON.parse(item.images)[0]}`,
+        size: await probe(`https://biografoimaginario.com:8888${JSON.parse(item.images)[0]}`),
       }
       item.imageWithSize = imageWithSize;
       return item;

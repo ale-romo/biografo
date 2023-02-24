@@ -13,7 +13,7 @@ const SignIn = ({ cb }:any) => {
     }
     console.log(data)
     try {
-      // $.ajax("http://biografoimaginario.com:8888/signUp",
+      // $.ajax("https://biografoimaginario.com:8888/signUp",
 			// 	{
 			// 		method: 'POST',
 			// 		xhrFields: { withCredentials: true },
@@ -25,7 +25,7 @@ const SignIn = ({ cb }:any) => {
 			// 		success: () => {console.log('Success')}
 			// 	}
 			// 	);
-      const response = await fetch('http://biografoimaginario.com:8888/signUp/', {
+      const response = await fetch('https://biografoimaginario.com:8888/signUp/', {
         method: 'POST',
         // credentials: 'include',
         body: JSON.stringify(data),

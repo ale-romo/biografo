@@ -87,7 +87,7 @@ const VideoRecorder = () => {
       formData.append("blob", blob, 'video');
       console.log(formData)
 
-      fetch('http://biografoimaginario.com:8888/upload', {
+      fetch('https://biografoimaginario.com:8888/upload', {
         method: 'POST',
         body: formData,
         mode: 'cors',

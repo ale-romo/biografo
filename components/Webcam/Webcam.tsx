@@ -68,7 +68,7 @@ const VideoRecorder = () => {
     }
   }, [mediaRecorderRef,setCapturing]);
 
-  const handleDownload = useCallback(() => {
+  const handleUpload = useCallback(() => {
     if (recordedChunks.length) {
       const blob = new Blob(recordedChunks, {
         type: 'video/webm',
@@ -95,7 +95,7 @@ const VideoRecorder = () => {
         headers: {
           'Access-Control-Allow-Origin': '*'
         }
-      })
+      }).then(() =>  {alert('Video subido exitosamente.')})
       setRecordedChunks([]);
       if (mediaRecorderRef.current) {
         mediaRecorderRef.current.stop();
@@ -117,7 +117,7 @@ const VideoRecorder = () => {
       <>
         <Button action={handleStartCaptureClick}>Start Capture</Button>
         {recordedChunks.length > 0 && (
-          <Button action={handleDownload}>Download</Button>
+          <Button action={handleUpload}>Subir Video</Button>
         )}
       </>
     )}

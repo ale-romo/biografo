@@ -1,4 +1,3 @@
-const http= require("https");
 const https = require("https");
 
 const { parse } = require("url");
@@ -16,15 +15,8 @@ const httpsOptions = {
 }
 
 app.prepare().then( () => {
-    if(dev){
-        http.createServer({}, (req, res) => {
-            const parsedURL = parse(req.url, true);
-            handle(req.res,parsedURL);
-        }).listen(3000)
-    } else {
-        https.createServer(httpsOptions, (req, res) => {
-            const parsedURL = parse(req.url, true);
-            handle(req.res,parsedURL);
-        }).listen(443)
-    }
+    https.createServer(httpsOptions, (req, res) => {
+        const parsedURL = parse(req.url, true);
+        handle(req,res,parsedURL);
+    }).listen(443)
 })

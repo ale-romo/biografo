@@ -40,9 +40,17 @@ const VideoRecorder = () => {
   const handleStartCaptureClick = useCallback(() => {
     setCapturing(true);
     if(webcamRef?.current?.stream) {
-      mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
-        mimeType: 'video/webm',
-      });
+      let options = {};
+      if(MediaRecorder.isTypeSupported('video/webm; codecs=vp9')){
+        options = {mimeType: 'video/webm; codecs=vp9'};
+      } else if (MediaRecorder.isTypeSupported('video/webm')) {
+        options = {mimeType: 'video/webm'};
+      } else if (MediaRecorder.isTypeSupported('video/mp4')) {
+        options = {mimeType: 'video/mp4', videoBitsPerSecond : 100000};
+      } else {
+        console.error('Este dispositivo no es compatible con este sitio.')
+      }
+      mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, options);
       mediaRecorderRef.current.addEventListener(
         'dataavailable',
         handleDataAvailable,
@@ -62,6 +70,7 @@ const VideoRecorder = () => {
 
   const handleDownload = useCallback(() => {
     if (recordedChunks.length) {
+      handleStopCaptureClick();
       const blob = new Blob(recordedChunks, {
         type: 'video/webm',
       });

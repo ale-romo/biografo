@@ -95,14 +95,9 @@ const VideoRecorder = () => {
         headers: {
           'Access-Control-Allow-Origin': '*'
         }
-      }).then(() =>  {alert('Video subido exitosamente.')})
-      setRecordedChunks([]);
-      if (mediaRecorderRef.current) {
-        mediaRecorderRef.current.stop();
-        setCapturing(false);
-      }
+      }).then(() =>  {alert('Video subido exitosamente.'); setRecordedChunks([]);})
     }
-  }, [recordedChunks, mediaRecorderRef, setCapturing]);
+  }, [recordedChunks]);
 
   return <Wrapper>
     <Webcam

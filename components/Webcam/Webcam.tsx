@@ -111,7 +111,7 @@ const VideoRecorder = ({ uid, objectid }:Props) => {
         headers: {
           'Access-Control-Allow-Origin': '*'
         }
-      }).then(() =>  {alert('Video subido exitosamente.'); setRecordedChunks([]);})
+      }).then(() =>  {alert('Video subido exitosamente.'); setRecordedChunks([]); window.location.href = `/` })
     }
   }, [recordedChunks]);
 

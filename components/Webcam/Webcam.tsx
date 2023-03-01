@@ -89,17 +89,7 @@ const VideoRecorder = ({ uid, objectid }:Props) => {
       const blob = new Blob(recordedChunks, {
         type: 'video/webm',
       });
-      let body = {
-        title: 'title',
-        description: 'description',
-        uid: '1',
-        objectID: '1',
-        tags: JSON.stringify(['lorem','ipsum','prueba'])
-      }
-      let formData = new FormData();
-      for (const [key, value] of Object.entries(body)){
-        formData.append(key,value);
-      }
+      let formData = new FormData(document.getElementById('webcamForm') as unknown as HTMLFormElement);
       formData.append("blob", blob, 'video');
       console.log(formData)
 
@@ -127,7 +117,7 @@ const VideoRecorder = ({ uid, objectid }:Props) => {
   </>
   var webcam = <>
     {(!started) && startedDiv}
-    <form id={styles.form}>
+    <form className={styles.form} id='webcamForm'>
       <input type='text' placeholder='título del recuerdo' name='title' id={styles.formTitle}></input><br/>
       <input type='textarea' placeholder='descripción del recuerdo' name='description' id={styles.formDescription}></input><br/>
       <input type='hidden' name='uid' id={styles.formTitle} value={uid}></input>

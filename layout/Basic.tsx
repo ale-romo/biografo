@@ -38,15 +38,19 @@ const BasicLayout = ({ children }: { children: any }) => {
     items: [
       {
         url: '/',
-        title: 'Home',
-      },
-      {
-        url: '/about',
-        title: 'About Us',
+        title: 'Inicio',
       },
       {
         url: '/acerca',
         title: 'Acerca',
+      },
+      {
+        url: '/como-funciona',
+        title: 'Cómo funciona',
+      },
+      {
+        url: '/faq',
+        title: 'Preguntas frecuentes',
       }
     ]
   }

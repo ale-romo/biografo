@@ -1,53 +1,39 @@
-import styled from 'styled-components';
-import Router from 'next/router';
-import Link from 'next/link';
 import probe from 'probe-image-size';
-import Carousel from 'components/Carousel/Carousel';
-import Modal from 'components/Modal/Modal';
-import Card from 'components/Cards/CardB';
-import {
-  NegativeText,
-  LargeText,
-  SectionWrapper,
-  Link1,
-} from 'components/TextFormats/TextFormats';
-import Webcam from 'react-webcam';
-
-const ModalContent = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0 15%;
-`;
 
 import VideoRecorder from 'components/Webcam/Webcam'
+import { LargeText } from 'components/TextFormats/TextFormats';
 
-export const getStaticProps = async () => {
-  const res: any = await fetch('https://biografoimaginario.com:8888/getAllObjects');
-  const data = await res.json();
-  const itemsWithImageSizes = await Promise.all(
-    data.map(async (item: any) => {
-      const imageWithSize = {
-        url: `https://biografoimaginario.com:8888${JSON.parse(item.images)[0]}`,
-        size: await probe(`https://biografoimaginario.com:8888${JSON.parse(item.images)[0]}`),
+export const getStaticProps = async ({params}: any) => {
+  const itemRes: any = await fetch(`https://biografoimaginario.com:8888/getObjects?ID=${params.pid}`);
+  const itemData = await itemRes.json();
+  const item = itemData[0];
+  const videoRes: any =  await fetch(`https://biografoimaginario.com:8888/getVideos?ID=${1}`)
+  const video = await videoRes.json();
+
+  const images = JSON.parse(item.images);
+
+  item.imagesWithSizes = await Promise.all(
+    images.map(async (image: string) => {
+      return {
+        url: `https://biografoimaginario.com:8888/${image}`,
+        size: await probe(`https://biografoimaginario.com:8888/${image}`)
       }
-      item.imageWithSize = imageWithSize;
-      return item;
     })
   );
 
   return {
     props: {
-      items: itemsWithImageSizes,
+      item: item,
+      video: video,
     }
   }
 }
 
 const HomePage = ({ items }: any) => {
-    return <VideoRecorder></VideoRecorder>
+  return <>
+    <LargeText>Mandando oferta para comprar {data.title}</LargeText>
+    <VideoRecorder objectid={'1'} uid={'1'}></VideoRecorder>
+  </>
 }
 
 export default HomePage;

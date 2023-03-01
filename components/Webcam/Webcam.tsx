@@ -1,9 +1,15 @@
 import Webcam from 'react-webcam';
 import { useState, useRef, useCallback, SetStateAction } from 'react';
-import Image from 'next/image';
 import styled from 'styled-components';
 import Button from 'components/Button/Button';
-import { useFetch } from 'lib/hooks/useFetch';
+import {LargeText} from 'components/TextFormats/TextFormats';
+
+import styles from './Webcam.module.css';
+
+interface Props {
+  uid: string;
+  objectid:string;
+}
 
 const Wrapper = styled.div`
   video {
@@ -11,15 +17,25 @@ const Wrapper = styled.div`
   }
 `;
 
-const VideoRecorder = () => {
+const VideoRecorder = ({ uid, objectid }:Props) => {
   const webcamRef = useRef<Webcam>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const [capturing, setCapturing] = useState(false);
   const [recordedChunks, setRecordedChunks] = useState([]);
   const [screenshot, setScreenshot] = useState(null);
+  const [started, setStarted] = useState(false);
+  const [instructionsViewed, setInstructionsViewed] = useState(false);
 
   // Photo
 
+  const handleStart = useCallback( () => {
+    setStarted(true);
+  },[started, setStarted]);
+
+  const handleInstructionsViewed = useCallback( () => {
+    setInstructionsViewed(true);
+  },[instructionsViewed, setInstructionsViewed]);
+  
   const captureScreenshot = useCallback(() => {
     if (webcamRef?.current?.getScreenshot) {
       const imageSrc: any = webcamRef.current.getScreenshot();
@@ -99,29 +115,64 @@ const VideoRecorder = () => {
     }
   }, [recordedChunks]);
 
-  return <Wrapper>
+  var startedDiv = <>
+    <div className={styles.instructionsDiv}>
+      <div>
+        <p><LargeText>Instrucciones:</LargeText> <br/>
+          Habla de una experiencia en la segunda persona: Tú te levantaste temprano para ver el amanecer, cuando estabas muy cansado... 
+        </p>
+        <Button action={handleStart}>Empezar</Button>
+      </div>
+    </div>
+  </>
+  var webcam = <>
+    {(!started) && startedDiv}
+    <form id={styles.form}>
+      <input type='text' placeholder='título del recuerdo' name='title' id={styles.formTitle}></input><br/>
+      <input type='textarea' placeholder='descripción del recuerdo' name='description' id={styles.formDescription}></input><br/>
+      <input type='hidden' name='uid' id={styles.formTitle} value={uid}></input>
+      <input type='hidden' name='objectID' id={styles.formTitle} value={objectid}></input>
+      <input type='text' placeholder='palabras clave del recuerdo (separar con espacios o con comas).' name='tags' id={styles.formTags}></input>
+    </form>
     <Webcam
       ref={webcamRef}
-      screenshotFormat="image/jpeg"
       audio={true}
       videoConstraints={{facingMode: 'user', }}
       muted={true}
     />
-    {capturing ? (
-      <Button action={handleStopCaptureClick}>Finalizar Grabación</Button>
-    ) : (
+    <div className={styles.buttonDiv}>
+      {capturing ? (
+        <>
+        <Button action={handleStopCaptureClick}>Finalizar Grabación</Button>
+        </>
+      ) : (
+        <>
+          <Button action={handleStartCaptureClick}>Grabar</Button>
+          {recordedChunks.length > 0 && (
+            <Button action={handleUpload}>Subir Video</Button>
+          )}
+        </>
+      )}
+      
+      <div className={styles.secondaryButtonDiv}>
+        <a href={`/objeto/${objectid}`} className={styles.linkButton}>Cancelar</a>
+      </div>
+    </div>
+  </>
+
+
+  return <Wrapper className={styles.webcamWrapper}>
+    <div className={styles.webcamDiv}>
+      {
+      instructionsViewed ? webcam : 
       <>
-        <Button action={handleStartCaptureClick}>Grabar</Button>
-        {recordedChunks.length > 0 && (
-          <Button action={handleUpload}>Subir Video</Button>
-        )}
-      </>
-    )}
-    <br />
-    {/* <Button action={captureScreenshot}>Take photo</Button>
-    {screenshot &&
-      <Image src={screenshot} alt="test" width={400} height="280"/>
-    } */}
+          <LargeText>Para continuar, tienes que compartir tu webcam y tu micrófono con nosotros al dar click en Ver Instrucciones.</LargeText>
+          <br/>
+          <br/>
+          <Button action={handleInstructionsViewed}>Ver Instrucciones</Button>
+        </>
+        }
+    </div>
   </Wrapper>
 };
 

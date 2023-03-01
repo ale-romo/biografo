@@ -1,0 +1,82 @@
+.webcamWrapper{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+}
+.instructionsDiv{
+    background: grey;
+    padding: 20px;
+    position: absolute;
+    z-index: 2;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.instructionsDiv p{
+    margin: 0 0 20px 0;
+}
+.instructionsDiv  button{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.webcamDiv{
+    padding: 40px 15vw;
+    width: fit-content;
+}
+.webcamDiv > button{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.buttonDiv{
+    margin-top:20px;
+}
+.buttonDiv button{
+    margin-right: 20px;
+}
+.secondaryButtonDiv{
+    display: inline;
+    float: right;
+}
+.secondaryButtonDiv button{
+    color: black;
+    border: black 1px solid;
+    background-color: white;
+    margin-right: 0;
+    margin-left: 20px;
+}
+.linkButton{
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: black;
+    display: inline-block;
+    border: none;
+    background: white;
+    cursor: pointer;
+    padding: 20px;
+    font-size: 14px;
+    text-transform: uppercase;
+    border: black 1px solid;
+}
+.linkButton:hover{
+    background: pink;
+    color: black;
+}
+#form{
+
+}
+#form input{
+    width: 100%;
+    margin-bottom: 10px;
+}
+#formDescription{
+    height: 50px;
+}

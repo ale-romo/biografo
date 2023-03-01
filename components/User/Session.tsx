@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
-import { userContext } from "./user";
 import Button from "components/Button/Button";
-import {LoginInput} from 'components/TextFormats/TextFormats';
+import { LoginInput } from 'components/TextFormats/TextFormats';
+import { LoginContext } from 'components/User/userContext';
 import Cookies from "js-cookie";
 import styled from 'styled-components';
 
@@ -57,19 +57,27 @@ const Divider = styled.div`
   height: 60%;
   background: gray;
 `
-
+const FormContainer = styled.div`
+  width: 30%;
+`;
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   row-gap: 10px;
 `;
 
-const Session = ({ cb }:any) => {
-  const [user, setUser] = useContext(userContext);
+const Error = styled.div`
+  color: #e06161;
+`
+
+const Session = () => {
+  const { setUsername } = useContext(LoginContext);
   const [signUpUserName, setSignUpUserName] = useState('');
   const [signUpPassword, setSignUpPassword] = useState('');
+  const [signUpError, setSignUpError] = useState('');
   const [signInUserName, setSignInUserName] = useState('');
   const [signInPassword, setSignInPassword] = useState('');
+  const [signInError, setSignInError] = useState('');
   const [humanity, setHumanity] = useState(true);
 
   const signUp = async () => {
@@ -87,17 +95,14 @@ const Session = ({ cb }:any) => {
       });
 
       const data  =  await response.json();
-      if (data?.passport?.user) {
+
+      if (data?.passport?.user && setUsername) {
         Cookies.set('user', data.passport.user, { expires: 100});
-        setUser({
-          ...user,
-          userId: data.passport.user,
-        });
+        setUsername(data.passport.user);
+      } else if (data?.error) {
+        setSignUpError(data.error);
       }
 
-      console.log(user);
-
-      cb(false);
     } catch (error) {
       console.error(error);
     }
@@ -120,16 +125,25 @@ const Session = ({ cb }:any) => {
 
       const data  =  await response.json();
 
+      if (data?.passport?.user && setUsername) {
+        Cookies.set('user', data.passport.user, { expires: 100});
+        setUsername(data.passport.user);
+      } else if (data?.error) {
+        setSignInError(data.error);
+      }
+
     } catch (error) {
       console.error(error);
     }
-    cb();
   };
 
   return <Container>
-    <div>
+    <FormContainer>
       <Header>¿Eres nuevo?</Header>
       <Form>
+        {signUpError &&
+          <Error>{signUpError}</Error>
+        }
         <LoginInput type="text" onChange={(e) => setSignUpUserName(e.target.value)} value={signUpUserName}/>
         <LoginInput type="password" onChange={(e) => setSignUpPassword(e.target.value)} value={signUpPassword} />
         <RobotContainer>
@@ -138,16 +152,19 @@ const Session = ({ cb }:any) => {
         </RobotContainer>
         <Button action={signUp} disabled={humanity}>Crear cuenta</Button>
       </Form>
-    </div>
+    </FormContainer>
     <Divider />
-    <div>
+    <FormContainer>
       <Header>¿Ya tienes una cuenta?</Header>
       <Form>
+        {signInError &&
+          <Error>{signInError}</Error>
+        }
         <LoginInput type="text" onChange={(e) => setSignInUserName(e.target.value)} value={signInUserName}/>
         <LoginInput type="password" onChange={(e) => setSignInPassword(e.target.value)} value={signInPassword} />
         <Button action={signIn}>Iniciar sesión</Button>
       </Form>
-    </div>
+    </FormContainer>
   </Container>
 };
 

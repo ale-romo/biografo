@@ -1,15 +1,15 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import BasicLayout from "layout/Basic";
-import UserProvider from 'components/Session/user';
+import AuthProvider from 'components/User/userContext';
 
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <UserProvider>
+  return <AuthProvider>
     <BasicLayout>
       <Component {...pageProps} />
     </BasicLayout>
-  </UserProvider>
+  </AuthProvider>
 }
 
 export default MyApp

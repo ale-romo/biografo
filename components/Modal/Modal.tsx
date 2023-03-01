@@ -72,7 +72,7 @@ const Modal = ({
   timer = 0,
   showCloseButton = true,
 }: Props) => {
-  const [open, setOpen] = useState(isOpen);
+  const [open, setOpen] = useState(false);
   useEscape(() => setOpen(false));
 
   useEffect(() => {

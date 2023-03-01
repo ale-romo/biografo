@@ -1,9 +1,10 @@
 import { useEffect, useState, useContext } from "react";
+import Cookies from "js-cookie";
 import styled from "styled-components";
 import Link from "next/link";
 import useEscape from "lib/hooks/useEscape";
-import { userContext } from 'components/Session/user';
-import Cookies from "js-cookie";
+import { LoginContext } from 'components/User/userContext';
+import Button from 'components/Button/Button';
 
 interface NavProps {
   active: boolean;
@@ -75,7 +76,8 @@ interface Props {
 }
 
 const Nav = (Props: Props) => {
-  const [user, setUser] = useContext(userContext);
+  const { username } = useContext(LoginContext);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [active, setActive] = useState(false);
   useEscape(() => !active && setActive(false));
   useEffect(() => {
@@ -100,10 +102,6 @@ const Nav = (Props: Props) => {
       });
       Cookies.set('user', '', { expires: 0 });
       Cookies.set('session', '', { expires: 0 });
-      setUser = {
-        id: '',
-        username: '',
-      }
       setActive(false);
     } catch (error) {
       console.error(error);
@@ -117,10 +115,12 @@ const Nav = (Props: Props) => {
           <a href={item.url} onClick={() => setActive(false)}>{item.title}</a>
         </Link>
       </li>)}
-      {user?.username &&
-        <button onClick={() => logout()}>Cerrar sesión</button>
-      }
     </StyledNav>
+    {username && <>
+      <div>Hola {username}</div>
+      {/* <Button action={() => logout()}>Cerrar sesión</Button> */}
+    </>
+    }
     <StyledHamburgerButton active={active} onClick={() => setActive(!active)} />
   </>
 }

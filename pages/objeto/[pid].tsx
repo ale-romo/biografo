@@ -1,13 +1,13 @@
 import { NextPage } from "next";
 import probe from 'probe-image-size';
 import Image from "next/image";
-import { useState } from "react";
-import cookie from 'js-cookie';
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import Button from "components/Button/Button";
 import Modal from "components/Modal/Modal";
-import SignIn from "components/Session/Session";
+import Session from "components/User/Session";
 import Carousel from "components/Carousel/Carousel";
+import { LoginContext } from "components/User/userContext";
 
 const Loader = styled.div`
   width: 100%;
@@ -25,10 +25,10 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({params}: any) => {
-  const itemRes: any = await fetch(`http://biografoimaginario.com:8888/getObjects?ID=${params.pid}`);
+  const itemRes: any = await fetch(`https://biografoimaginario.com:8888/getObjects?ID=${params.pid}`);
   const itemData = await itemRes.json();
   const item = itemData[0];
-  const videoRes: any =  await fetch(`http://biografoimaginario.com:8888/getVideos?ID=${1}`)
+  const videoRes: any =  await fetch(`https://biografoimaginario.com:8888/getVideos?ID=${params.pid}`)
   const video = await videoRes.json();
 
   const images = JSON.parse(item.images);
@@ -36,8 +36,8 @@ export const getStaticProps = async ({params}: any) => {
   item.imagesWithSizes = await Promise.all(
     images.map(async (image: string) => {
       return {
-        url: `http://biografoimaginario.com:8888/${image}`,
-        size: await probe(`http://biografoimaginario.com:8888/${image}`)
+        url: `https://biografoimaginario.com:8888/${image}`,
+        size: await probe(`https://biografoimaginario.com:8888/${image}`)
       }
     })
   );
@@ -52,8 +52,7 @@ export const getStaticProps = async ({params}: any) => {
 
 const PerfilObjeto: NextPage = ({ item, video }: any) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const session = cookie.get('user');
-
+  const { username } = useContext(LoginContext);
   return <>
     {item &&
       <>
@@ -73,12 +72,12 @@ const PerfilObjeto: NextPage = ({ item, video }: any) => {
         <p>{item.history}</p>
         <h2>Video</h2>
         <video>
-          {/* <source src={`http://biografoimaginario.com:8888${video[0].videoURL}`} /> */}
+          {/* <source src={`https://biografoimaginario.com:8888${video[0].videoURL}`} /> */}
         </video>
-        {session ?
+        {username ?
           <Button action={`/capturar/${item.objectID}`}>Comprar ahora</Button> :
           <Modal triggerText="Regístrate para comprar" isOpen={modalIsOpen}>
-            <SignIn cb={setModalIsOpen} />
+            <Session />
           </Modal>
         }
       </>

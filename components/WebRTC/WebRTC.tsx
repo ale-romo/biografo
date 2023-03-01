@@ -40,17 +40,9 @@ const VideoRecorder = () => {
   const handleStartCaptureClick = useCallback(() => {
     setCapturing(true);
     if(webcamRef?.current?.stream) {
-      let options = {};
-      if(MediaRecorder.isTypeSupported('video/webm; codecs=vp9')){
-        options = {mimeType: 'video/webm; codecs=vp9'};
-      } else if (MediaRecorder.isTypeSupported('video/webm')) {
-        options = {mimeType: 'video/webm'};
-      } else if (MediaRecorder.isTypeSupported('video/mp4')) {
-        options = {mimeType: 'video/mp4', videoBitsPerSecond : 100000};
-      } else {
-        console.error('Este dispositivo no es compatible con este sitio.')
-      }
-      mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, options);
+      mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
+        mimeType: 'video/webm',
+      });
       mediaRecorderRef.current.addEventListener(
         'dataavailable',
         handleDataAvailable,
@@ -68,7 +60,7 @@ const VideoRecorder = () => {
     }
   }, [mediaRecorderRef,setCapturing]);
 
-  const handleUpload = useCallback(() => {
+  const handleDownload = useCallback(() => {
     if (recordedChunks.length) {
       const blob = new Blob(recordedChunks, {
         type: 'video/webm',
@@ -95,7 +87,8 @@ const VideoRecorder = () => {
         headers: {
           'Access-Control-Allow-Origin': '*'
         }
-      }).then(() =>  {alert('Video subido exitosamente.'); setRecordedChunks([]);})
+      })
+      setRecordedChunks([]);
     }
   }, [recordedChunks]);
 
@@ -105,23 +98,22 @@ const VideoRecorder = () => {
       screenshotFormat="image/jpeg"
       audio={true}
       videoConstraints={{facingMode: 'user', }}
-      muted={true}
     />
     {capturing ? (
-      <Button action={handleStopCaptureClick}>Finalizar Grabación</Button>
+      <Button action={handleStopCaptureClick}>Stop Capture</Button>
     ) : (
       <>
-        <Button action={handleStartCaptureClick}>Grabar</Button>
+        <Button action={handleStartCaptureClick}>Start Capture</Button>
         {recordedChunks.length > 0 && (
-          <Button action={handleUpload}>Subir Video</Button>
+          <Button action={handleDownload}>Download</Button>
         )}
       </>
     )}
     <br />
-    {/* <Button action={captureScreenshot}>Take photo</Button>
+    <Button action={captureScreenshot}>Take photo</Button>
     {screenshot &&
       <Image src={screenshot} alt="test" width={400} height="280"/>
-    } */}
+    }
   </Wrapper>
 };
 

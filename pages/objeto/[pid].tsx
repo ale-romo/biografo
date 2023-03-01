@@ -29,6 +29,7 @@ export const getStaticProps = async ({params}: any) => {
   const itemData = await itemRes.json();
   const item = itemData[0];
   const videoRes: any =  await fetch(`https://biografoimaginario.com:8888/getVideos?ID=${params.pid}`)
+
   const video = await videoRes.json();
 
   const images = JSON.parse(item.images);

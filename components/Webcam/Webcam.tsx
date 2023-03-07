@@ -3,6 +3,8 @@ import { useState, useRef, useCallback, SetStateAction } from 'react';
 import styled from 'styled-components';
 import Button from 'components/Button/Button';
 import {LargeText} from 'components/TextFormats/TextFormats';
+import { LoginContext } from "components/User/userContext";
+import { useContext} from "react";
 
 import styles from './Webcam.module.css';
 
@@ -16,6 +18,9 @@ const Wrapper = styled.div`
     max-width: 100%;
   }
 `;
+
+const { userId } = useContext(LoginContext);
+
 
 const VideoRecorder = ({ uid, objectid }:Props) => {
   const webcamRef = useRef<Webcam>(null);
@@ -120,7 +125,7 @@ const VideoRecorder = ({ uid, objectid }:Props) => {
     <form className={styles.form} id='webcamForm'>
       <input type='text' placeholder='título del recuerdo' name='title' id={styles.formTitle}></input><br/>
       <input type='textarea' placeholder='descripción del recuerdo' name='description' id={styles.formDescription}></input><br/>
-      <input type='hidden' name='uid' id={styles.formTitle} value={uid}></input>
+      <input type='hidden' name='uid' id={styles.formTitle} value={String(userId)}></input>
       <input type='hidden' name='objectID' id={styles.formTitle} value={objectid}></input>
       <input type='text' placeholder='palabras clave del recuerdo (separar con espacios o con comas).' name='tags' id={styles.formTags}></input>
     </form>

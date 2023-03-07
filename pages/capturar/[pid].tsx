@@ -61,7 +61,7 @@ const UploadObjeto: NextPage = ({item, pid}: any) => {
         <LargeText>Mandando oferta para comprar <b>{item.title}</b></LargeText>
       </div>
       <br/>
-      <VideoRecorder objectid={pid}></VideoRecorder>
+      <VideoRecorder objectid={pid} uid={'1'}></VideoRecorder>
     </div>
   </>
 };

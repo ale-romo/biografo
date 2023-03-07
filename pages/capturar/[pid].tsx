@@ -3,6 +3,8 @@ import { NextPage } from "next";
 import VideoRecorder from 'components/Webcam/Webcam'
 import { LargeText } from 'components/TextFormats/TextFormats';
 import Button from "components/Button/Button";
+import { LoginContext } from "components/User/userContext";
+import { useContext} from "react";
 
 export const getStaticPaths = async () => {
   return {
@@ -29,6 +31,8 @@ export const getStaticProps = async ({params}: any) => {
     }
   }
 }
+
+const { userId } = useContext(LoginContext);
 
 const UploadObjeto: NextPage = ({item, pid}: any) => {
 
@@ -59,7 +63,7 @@ const UploadObjeto: NextPage = ({item, pid}: any) => {
         <LargeText>Mandando oferta para comprar <b>{item.title}</b></LargeText>
       </div>
       <br/>
-      <VideoRecorder objectid={pid} uid={'1'}></VideoRecorder>
+      <VideoRecorder objectid={pid} uid={String(userId) }></VideoRecorder>
     </div>
   </>
 };

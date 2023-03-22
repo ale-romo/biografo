@@ -58,17 +58,22 @@ const AdminObjetos: NextPage = ({items, users, videos}: any) => {
             }
             if(changeKeysToVideoTitleArray.includes(key)){
                 if(item[key] == '-1'){item[key.replace('ID', 'Title')] = "_Sin__Venderse_ [09q3u4n91237n4-0127b3408"; } else 
-                {item[key.replace('ID', 'name')] = videos[item[key]];}
+                {item[key.replace('ID', 'Title')] = videos[item[key]];}
                 delete item[key];
             }
             if(key == 'images'){
                 delete item[key];
             }
         }
-        let form = <Form updateAction='/secretLiaUpdateVideo112355335425' deleteAction='/secretLiaRemoveItem112355335425' method='POST' item={item} users={users} id={item.objectID} videos={videos}></Form>
+        let form = <Form updateAction='https://biografoimaginario.com:8888/secretLiaUpdateItem112355335425' 
+          deleteAction='https://biografoimaginario.com:8888/secretLiaDeleteItem112355335425' 
+          method='POST' 
+          item={item} users={users} id={item.objectID} videos={videos} objects={[]} 
+          key={`form${item.objectID}`}></Form>
         forms.push(form);
     }
     return <>
+      <iframe name='decoy' style={{visibility:'hidden', height: '10px'}}></iframe>
         {forms.map((form) => {
             return form;
         })}

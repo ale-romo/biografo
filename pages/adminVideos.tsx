@@ -62,10 +62,14 @@ const AdminObjetos: NextPage = ({items, users, videos}: any) => {
                 delete item[key];
             }
         }
-        let form = <Form updateAction='/secretLiaUpdateVideo112355335425' deleteAction='/secretLiaRemoveItem112355335425' method='POST' item={item} users={users} id={item.objectID} videos={videos} objects={items}></Form>
+        let form = <Form updateAction='https://biografoimaginario.com:8888/secretLiaUpdateVideo112355335425' 
+        deleteAction='https://biografoimaginario.com:8888/secretLiaRemoveVideo112355335425'
+        method='POST' 
+        item={item} users={users} id={item.videoID} videos={videos} objects={items}></Form>
         forms.push(form);
     }
     return <>
+      <iframe name='decoy' style={{visibility:'hidden', height: '10px'}}></iframe>
         {forms.map((form) => {
             return form;
         })}

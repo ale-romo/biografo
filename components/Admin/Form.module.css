@@ -1,0 +1,52 @@
+.fieldsDiv{
+    width: 80%;
+    margin: 0 auto;
+}
+.fieldsDiv > input{
+    width: 100%;
+}
+.fieldsDiv > select{
+    width: 100%;
+}
+.buttonsDiv{
+    margin: 0 auto;
+    padding-top: 20px;
+    width: 80%;
+}
+.formsDiv{
+    width: 100%;
+}
+.linkButton{
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: black;
+    display: inline-block;
+    border: none;
+    background: white;
+    cursor: pointer;
+    padding: 20px;
+    font-size: 14px;
+    text-transform: uppercase;
+    border: black 1px solid;
+}
+.linkButton:hover{
+    background: pink;
+    color: black;
+}
+.linkButtonWarning{
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    border: none;
+    background: red;
+    cursor: pointer;
+    padding: 20px;
+    font-size: 14px;
+    text-transform: uppercase;
+    border: white 1px solid;
+}

@@ -24,8 +24,7 @@ const ComoFunciona: NextPage = () => {
       </li>
       <li>
         <Image src="/images/step3.jpg" width={572} height={905}/>
-        <p>podés inventarlo o recordar algo que quieras inventar a partir de este objeto creas un recuerdo</p>
-        <p>le contás al autor en construcción su nuevo recuerdo</p>
+        <p>podés inventarl o recordar algo a partir de este objeto y le contás al autor en construcción su nuevo recuerdo</p>
       </li>
       <li>
         <Image src="/images/step4.jpg" width={572} height={905}/>

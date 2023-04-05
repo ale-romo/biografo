@@ -11,7 +11,6 @@ const SignIn = ({ cb }:any) => {
       username: userName,
       password: password,
     }
-    console.log(data)
     try {
       // $.ajax("http://biografoimaginario.com:8888/signUp",
 			// 	{
@@ -35,7 +34,6 @@ const SignIn = ({ cb }:any) => {
         }
       });
 
-      console.log(response)
     } catch (error) {
       console.error(error);
     }

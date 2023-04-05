@@ -47,6 +47,10 @@ const BasicLayout = ({ children }: { children: any }) => {
       {
         url: '/acerca',
         title: 'Acerca',
+      },
+      {
+        url: '/auth',
+        title: 'Iniciar Sesión',
       }
     ]
   }

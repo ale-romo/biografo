@@ -51,6 +51,14 @@ const BasicLayout = ({ children }: { children: any }) => {
       {
         url: '/faq',
         title: 'Preguntas frecuentes',
+      },
+      {
+        url: '/contacto',
+        title: 'Contáctanos',
+      },
+      {
+        url: '/auth',
+        title: 'Iniciar Sesión',
       }
     ]
   }

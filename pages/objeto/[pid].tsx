@@ -17,6 +17,15 @@ const Loader = styled.div`
   text-align: center;
 `;
 
+const Form  = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  width: 500px;
+  background: #efefef;
+  padding: 50px;
+`;
+
 export const getStaticPaths = async () => {
   return {
     paths: [],
@@ -51,9 +60,19 @@ export const getStaticProps = async ({params}: any) => {
   }
 }
 
+const submit = () => {
+  console.log('sent');
+  return
+}
+
 const PerfilObjeto: NextPage = ({ item, video }: any) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
   const { username } = useContext(LoginContext);
+
+
   return <>
     {item &&
       <>
@@ -81,6 +100,13 @@ const PerfilObjeto: NextPage = ({ item, video }: any) => {
             <Session />
           </Modal>
         }
+        <Form>
+          <h2>¿Tienes alguna duda sobre este producto?</h2>
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)}placeholder="Nombre" />
+          <input type="text" value={email} onChange={(e) => setEmail(e.target.value)}placeholder="Email" />
+          <textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Mensaje"></textarea>
+          <Button action={submit}>Enviar</Button>
+        </Form>
       </>
     }
   </>

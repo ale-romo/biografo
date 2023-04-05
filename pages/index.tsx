@@ -51,7 +51,7 @@ const HomePage = ({ items }: any) => {
   }
   return <>
     {items &&
-      <Carousel title="Artículos Biógrafo">
+      <Carousel title="Artículos destacados">
         {items.map((item: any, i: number) => {
           const cardProps = {
             src: item.imageWithSize.url,

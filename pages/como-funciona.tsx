@@ -1,29 +1,40 @@
 import { NextPage } from "next";
+import Image from "next/image";
+import styled from "styled-components";
 import { SectionWrapper } from 'components/TextFormats/TextFormats';
+
+const Steps = styled.ul`
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+  justify-content: space-around;
+  column-gap: 40px;
+`;
 
 const ComoFunciona: NextPage = () => {
   return <SectionWrapper>
-    <ul>
+    <Steps>
       <li>
+        <Image src="/images/step1.jpg" width={572} height={905}/>
         <p>elegís un objeto del autor en coonstrucción</p>
       </li>
       <li>
-        <p>podés inventarlo o recordar algo que quieras inventar</p>
-        <p>a partir de este objeto creas un recuerdo</p>
-      </li>
-      <li>
+        <Image src="/images/step2.jpg" width={572} height={905}/>
         <p>click en compra ya automáticamente se activará tu webcam</p>
       </li>
       <li>
+        <Image src="/images/step3.jpg" width={572} height={905}/>
+        <p>podés inventarlo o recordar algo que quieras inventar a partir de este objeto creas un recuerdo</p>
         <p>le contás al autor en construcción su nuevo recuerdo</p>
       </li>
       <li>
+        <Image src="/images/step4.jpg" width={572} height={905}/>
         <p>el objeto ya es tuyo</p>
       </li>
       <li>
         <p>entre todos hacemos una película sobre la memoria</p>
       </li>
-    </ul>
+    </Steps>
     <p>
       El recuerdo que imaginas tiene que incluir al objeto elegido y a tí con el pasadoo del autor en construcción. Esta historia será un nuevo recuerdo compartido entre ustedes.
       Puede tener cualquier forma, carácter o tono.

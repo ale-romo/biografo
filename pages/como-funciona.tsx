@@ -31,6 +31,7 @@ const ComoFunciona: NextPage = () => {
         <p>el objeto ya es tuyo</p>
       </li>
       <li>
+        <img src="www.miravalresorts.com/wp-content/themes/miraval/assets/images/world-hyatt.png" />
         <p>entre todos hacemos una película sobre la memoria</p>
       </li>
     </Steps>

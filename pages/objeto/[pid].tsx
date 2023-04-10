@@ -8,6 +8,7 @@ import Modal from "components/Modal/Modal";
 import Session from "components/User/Session";
 import Carousel from "components/Carousel/Carousel";
 import { LoginContext } from "components/User/userContext";
+import URL_QR from "components/URL_QR/URL_QR";
 
 const Loader = styled.div`
   width: 100%;
@@ -90,6 +91,9 @@ const PerfilObjeto: NextPage = ({ item, video }: any) => {
         <h3>{!item.soldUserId ? 'En venta' : 'Vendido'}</h3>
         <p>{item.description}</p>
         <p>{item.history}</p>
+        <h3> ¿Quieres compartir este objeto?</h3>
+        <URL_QR></URL_QR>
+        <br></br>
         <h2>Video</h2>
         <video>
           {/* <source src={`https://biografoimaginario.com:8888${video[0].videoURL}`} /> */}

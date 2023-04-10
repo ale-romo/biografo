@@ -14,7 +14,7 @@ interface Props {
 
 }
 
-const EditVideoPlayer =({ source, timeStart, timeEnd }:Props) => {
+const EditVideoPlayer = ({ source, timeStart, timeEnd }:Props) => {
     const videoRef = useRef(null)
     const [isFinished, setIsFinished] = useState(false);
 

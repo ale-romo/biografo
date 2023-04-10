@@ -1,5 +1,5 @@
 import styled, {css} from 'styled-components';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import styles from './Form.module.css';
 
 // interface Fields{
@@ -50,6 +50,33 @@ import styles from './Form.module.css';
 
 const Form =({ updateAction, deleteAction, method, item, id, users, videos, objects}) => {
     const [ID, setID] = useState(id);
+    const [confirmDelete, setConfirmDelete] = useState(false);
+    const [formFields, setFormFields] = useState({})
+    useEffect(() => {
+        setFormFields(inputValues);
+    }, []);
+
+    function handleChange(fieldName, event){
+        let ans = formFields;
+        ans[fieldName] = event.target.value;
+        setFormFields(ans);
+    }
+
+    function handleSubmit(event){
+        event.preventDefault();
+        console.log("Data: ", formFields);
+        fetch(updateAction, {
+            method: 'POST',
+            headers: {
+                "Content-Type":'application/json',
+            },
+            body: JSON.stringify(formFields),
+        }).then(
+            () => {
+                alert(`Elemento con ID #${id} actualizado.`);
+            }
+        )
+    }
 
     const handleDelete = useCallback( () => {
         fetch(`${deleteAction}?id=${id}`, {
@@ -60,11 +87,12 @@ const Form =({ updateAction, deleteAction, method, item, id, users, videos, obje
         })
     },[ID, setID]);
 
-    const handleUpdate = useCallback( () => {
-        alert(`Elemento con ID #${id} actualizado.`);
-    },[ID, setID]);
+    const handleToConfirm = useCallback( () => {
+        setConfirmDelete(true);
+    },[confirmDelete, setConfirmDelete]);
 
     let inputs = [];
+    let inputValues = {id: id};
     for(let fieldName in item){
         let specialFieldNames = {endDate: 'date', createdAt: 'date', description: 'textarea', history: 'textarea', timePublished: 'date'}
         let type = 'text';
@@ -87,45 +115,64 @@ const Form =({ updateAction, deleteAction, method, item, id, users, videos, obje
                 case 'username':
                     name = 'userID';
                     break;
+                case 'vObjectID':
+                    name = 'objectID';
+                    break;
             }
             let options = [];
-            if(fieldName === 'soldUsername'){
-                if(item[fieldName]==''){
-                    options.push(<option key={`option${fieldName}.${item[fieldName]}`} value={-1} selected>Sin venderse</option>);
-                } else { 
-                    options.push(<option key={`option${fieldName}.${item[fieldName]}`} value={-1}>Sin venderse</option>);
+            if(fieldName === 'vObjectID'){
+                for (let object in objects){
+                    if(objects[object] == item[fieldName]){
+                        options.push(<option value={object} selected>{`${object}. ${objects[object]}`}</option>)
+                        inputValues[name] = object;
+                    } else {
+                        options.push(<option value={object}>{`${object}. ${objects[object]}`}</option>)
+                    }
                 }
-            }
-            for (let user in users){
-                if(users[user] == item[fieldName]){
-                    options.push(<option key={`option${fieldName}.${item[fieldName]}`} value={user} selected>{`${user}. ${users[user]}`}</option>)
+            } else {
+                if(fieldName === 'soldUsername'){
+                    if(item[fieldName]==''){
+                        inputValues[name] = '-1';
+                        options.push(<option value={-1} selected>Sin venderse</option>);
+                    } else { 
+                        options.push(<option value={-1}>Sin venderse</option>);
+                    }
+                }
+                for (let user in users){
+                    if(users[user] == item[fieldName]){
+                        options.push(<option value={user} selected>{`${user}. ${users[user]}`}</option>)
+                        inputValues[name] = user;
                 } else {
-                    options.push(<option key={`option${fieldName}.${item[fieldName]}`} value={user}>{`${user}. ${users[user]}`}</option>)
+                        options.push(<option value={user}>{`${user}. ${users[user]}`}</option>)
+                    }
                 }
             }
-            inputs.push(<div className={styles.fieldsDiv} key={`input${fieldName}.${item[fieldName]}`}>
-                <label>{fieldName.replace('name', 'id')}</label>
-                <select  name={name} key={`select${id}.${fieldName}`}>
+
+            inputs.push(<div className={styles.fieldsDiv} >
+                <label>{fieldName.replace('name', 'ID')}</label>
+                <select  name={name} onChange={(e) => handleChange(fieldName.replace('name', 'ID'), e)}>
                     {options.map((option) => {return <>{option}</>})}
                 </select>
             </div>);
         } else if (fieldName === 'soldVideoTitle'){
             let options = [];
-            if(item[fieldName] == ''){
-                options.push(<option key={`option${fieldName}.${item[fieldName]}`} value={-1} selected>Sin venderse</option>);
+            if(item[fieldName].includes('_Sin__Venderse_')){
+                inputValues['soldVideoID'] = '-1';
+                options.push(<option value={-1} selected>Sin venderse</option>);
             } else { 
-                options.push(<option key={`option${fieldName}.${item[fieldName]}`} value={-1}>Sin venderse</option>);
+                options.push(<option value={-1}>Sin venderse</option>);
             }
             for (let video in videos){
                 if(videos[video] == item[fieldName]){
-                    options.push(<option key={`option${fieldName}.${item[fieldName]}`} value={video} selected>{`${video}. ${videos[video]}`}</option>)
+                    inputValues['soldVideoID'] = video;
+                    options.push(<option value={video} selected>{`${video}. ${videos[video]}`}</option>)
                 } else {
-                    options.push(<option key={`option${fieldName}.${item[fieldName]}`} value={video} >{`${video}. ${videos[video]}`}</option>)
+                    options.push(<option value={video} >{`${video}. ${videos[video]}`}</option>)
                 }
             }
-            inputs.push(<div className={styles.fieldsDiv} key={`input${fieldName}.${item[fieldName]}`}>
-                <label>{fieldName}</label>
-                <select  name='soldVideoID' key={`select${fieldName}.${item[fieldName]}`}>
+            inputs.push(<div className={styles.fieldsDiv} >
+                <label>{'soldVideoID'}</label>
+                <select  name='soldVideoID' onChange={(e) => handleChange('soldVideoID', e)}>
                     {options.map((option) => {return <>{option}</>})}
                 </select>
             </div>);
@@ -133,30 +180,36 @@ const Form =({ updateAction, deleteAction, method, item, id, users, videos, obje
             let options = [];
             for (let object in objects){
                 if(object == item[fieldName]){
-                    options.push(<option key={`input${fieldName}.${item[fieldName]}`} value={object} selected>{`${object}. ${objects[object]}`}</option>)
+                    options.push(<option  value={object} selected>{`${object}. ${objects[object]}`}</option>)
                 } else {
-                    options.push(<option key={`input${fieldName}.${item[fieldName]}`} value={object} >{`${object}. ${objects[object]}`}</option>)
+                    options.push(<option  value={object} >{`${object}. ${objects[object]}`}</option>)
                 }
             }
-            inputs.push(<div className={styles.fieldsDiv} key={`input${fieldName}.${item[fieldName]}`}>
+            inputValues[fieldName] = item[fieldName];
+            inputs.push(<div className={styles.fieldsDiv} >
                 <label>{fieldName}</label>
-                <select  name='objectID' key={`select${fieldName}.${item[fieldName]}`}>
+                <select  name='objectID' onChange={(e) => handleChange(fieldName, e)}>
                     {options.map((option) => {return <>{option}</>})}
                 </select>
             </div>);
         } else{
-            inputs.push(<div className={styles.fieldsDiv} key={`input${fieldName}.${item[fieldName]}`}>
+            inputValues[fieldName] = item[fieldName];
+            inputs.push(<div className={styles.fieldsDiv} >
                 <label>{fieldName}</label>
-                <input type={type} name={fieldName} defaultValue={item[fieldName]} disabled={fieldName.includes('ID')}></input>
+                <input type={type} name={fieldName} defaultValue={item[fieldName]} disabled={fieldName.includes('ID')} onChange={(e) => handleChange(fieldName, e)}></input>
             </div>);
         }
+
     }
     return <>
         <form action={updateAction} method={method} className='formsDiv' target='decoy'> 
             <>
             <input type='hidden' name='id' value={id}></input>
-            {inputs.map((input) => {return <> {input}</>})}
-            <div className={styles.buttonsDiv}><button className={styles.linkButton} onClick={handleUpdate}>Actualizar</button> <button className={styles.linkButtonWarning} onClick={handleDelete} type='button'>Borrar</button></div> <hr />
+            {inputs.map((input,index) => {return <div key={index}> {input}</div>})}
+            <div className={styles.buttonsDiv}><button className={styles.linkButton} onClick={handleSubmit}>Actualizar</button>
+                {!confirmDelete?<button className={styles.linkButtonWarning} onClick={handleToConfirm} type='button'>Borrar</button>:<></>}
+                {confirmDelete?<button className={styles.linkButtonWarning} onClick={handleDelete} type='button'>Confirmación: Borrar</button>:<></>}
+            </div>
             </>
         </form>
         <hr />

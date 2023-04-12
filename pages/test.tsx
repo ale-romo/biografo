@@ -45,6 +45,7 @@ const HomePage = ({ items }: any) => {
   }
   return <>
     {loading &&<Loader>Loading...</Loader>}
+    <CardB src='https://biografoimaginario.com:8888/thumbs/3/3/6/0/1fec-cd23-440d-89d3-8dc01467cfba.png' width={400} height={800} alt='Video'  ></CardB>
     {data &&
       <Carousel title="Artículos en venta">
         {data.map((item: any, i: number) => {

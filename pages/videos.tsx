@@ -1,0 +1,90 @@
+import { NextPage } from "next";
+import CardC from 'components/Cards/CardC';
+import { useEffect, useState, useRef } from 'react';
+
+
+export const getStaticProps = async () => {
+  const videoRes: any = await fetch(`https://biografoimaginario.com:8888/getAllVideos`);
+  const videoData = await videoRes.json();
+  let videos;
+
+  if(videoData.length == 0){
+    videos = {error: 'No se encontró el objeto que buscas'}
+  } else {
+    videos = videoData;
+  }
+
+
+  return {
+    props: {
+      videos: videos
+    }
+  }
+}
+
+const Objetos: NextPage = ({videos}:any) => {
+  const [sortMode, setSortMode] = useState('reverseChronological');
+
+  function handleSelectChange(e:Event){
+    if(e) setSortMode(e.target.value);
+  }
+
+  function sortVideos(videos: any){
+    switch(sortMode){
+        case 'title':
+            videos.sort((a:any,b:any)=>{
+                return a.title.localeCompare(b.title);
+            })
+        break;
+        case 'chronological':
+            videos.sort((a:any,b:any) => {
+                return a.videoID > b.videoID? 1: -1;
+            });
+        break;
+        case 'reverseTitle':
+            videos.sort((a:any,b:any) => {
+                return b.title.localeCompare(a.title);
+            });
+        break;
+        case 'reverseChronological':
+            videos.sort((a:any,b:any) => {
+                return b.videoID > a.videoID? 1: -1;
+            });
+        break;
+    }
+    console.log(sortMode);
+    console.log(videos[0].title);
+    return videos;
+  }
+
+  function filterObjects(videos:any){
+    return videos;
+  }
+
+  videos = sortVideos(videos);
+
+  let cards = [];
+  for(let video of videos){
+    cards.push({src:`https://biografoimaginario.com:8888/thumbs${video.videoURL.replace('.mp4', '.png')}`, 
+    title:video.title, description:video.description, action:`/video/${video.videoID}`})
+  }
+  return <>
+        <select onChange={handleSelectChange}>
+            <option value='reverseChronological' selected>Más Reciente Primero</option>
+            <option value='chronological'>Menos Reciente Primero</option>
+            <option value='title'>Órden Alfabético</option>
+            <option value='reverseTitle'>Órden Reverso Alfabético</option>
+        </select>
+        <div id='videosContainer'>
+        <style>{`#videosContainer{
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+            }`}</style>
+        {cards.map((input, index) => {
+        return <div key={index}><CardC src={input.src} title={input.title} description={input.description} isVideo={true}></CardC></div>
+        })}
+    </div>
+  </>
+};
+
+export default Objetos;

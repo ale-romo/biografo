@@ -38,9 +38,9 @@ const CardA = ({src, width, height, alt, action, buttonText = ''}: Props) => {
 
   return <StyledCard>
   <Image
-    src={src}
-      width={window.innerWidth - 20 < width ? window.innerWidth - 20 : width}
-      height={window.innerWidth -20 < width ? height * (window.innerWidth -20) / width : height}
+      src={src}
+      width={width}
+      height={height}
       alt={alt}
       layout='fixed' />
   <StyledContent>

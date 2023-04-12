@@ -1,17 +1,12 @@
 import Link from 'next/link';
 import styles from './EditVideoPlayer.module.css';
 
-
 import { useState, useRef, useCallback, useEffect, SetStateAction } from 'react';
-
-
 
 interface Props {
     source?: string,
     timeStart: number,
     timeEnd: number,
-
-
 }
 
 const EditVideoPlayer = ({ source, timeStart, timeEnd }:Props) => {
@@ -20,7 +15,6 @@ const EditVideoPlayer = ({ source, timeStart, timeEnd }:Props) => {
 
     useEffect(() => {
       (videoRef.current as any).currentTime = timeStart;
-      console.log('Donasdfasdfasdfe!')
     }, [])
 
     const handleTimeUpdate = useCallback( () => {

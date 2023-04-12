@@ -41,6 +41,18 @@ const BasicLayout = ({ children }: { children: any }) => {
         title: 'Inicio',
       },
       {
+        url: '/edit',
+        title: 'Ver Biografia',
+      },
+      {
+        url: '/videos',
+        title: 'Ver Todos los Recuerdos',
+      },
+      {
+        url: '/objetos',
+        title: 'Ver Todos los Objetos',
+      },
+      {
         url: '/acerca',
         title: 'Acerca',
       },

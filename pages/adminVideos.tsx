@@ -39,7 +39,6 @@ export const getStaticProps = async () => {
 }
 
 const AdminObjetos: NextPage = ({items, users, videos}: any) => {
-
     if(typeof videos === 'undefined'){
       return <p>Cargando ... </p>
     } 
@@ -49,7 +48,7 @@ const AdminObjetos: NextPage = ({items, users, videos}: any) => {
         let keysToDelete = ['isTranscripted', 'isEncoded', 'videoURL', 'tempURL', 'transcription']
 
         for(let key in item){
-            if(changeKeysToUsernameArray.includes(key)){
+              if(changeKeysToUsernameArray.includes(key)){
                 if(item[key] == '-1'){item[key.replace('ID', 'name')] = ""; } else 
                 {item[key.replace('ID', 'name')] = users[item[key]];}
                 delete item[key];

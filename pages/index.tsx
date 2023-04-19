@@ -5,6 +5,7 @@ import probe from 'probe-image-size';
 import Carousel from 'components/Carousel/Carousel';
 import Modal from 'components/Modal/Modal';
 import Card from 'components/Cards/CardB';
+import CardC from 'components/Cards/CardC';
 import {
   NegativeText,
   LargeText,
@@ -35,15 +36,18 @@ export const getStaticProps = async () => {
       return item;
     })
   );
+  const videoRes: any = await fetch(`https://biografoimaginario.com:8888/getAllVideos`);
+  const videoData = await videoRes.json();
 
   return {
     props: {
       items: itemsWithImageSizes,
+      videos: videoData
     }
   }
 }
 
-const HomePage = ({ items }: any) => {
+const HomePage = ({ items, videos }: any) => {
   const sendProps = (item: any) => {
     Router.push({
       pathname: `/objeto/${item.objectID}`,
@@ -56,8 +60,6 @@ const HomePage = ({ items }: any) => {
           const cardProps = {
             src: item.imageWithSize.url,
             title: item.title,
-            width: item.imageWithSize.size.width/10,
-            height: item.imageWithSize.size.height/10,
             sold: item.soldUserId,
             action: () => sendProps(item),
           };
@@ -65,7 +67,19 @@ const HomePage = ({ items }: any) => {
         })}
       </Carousel>
     }
-
+    {videos &&
+      <Carousel title="Recuerdos destacados">
+        {videos.map((video: any, i: number) => {
+          const cardProps = {
+            src: `https://biografoimaginario.com:8888/thumbs${video.videoURL.replace('mp4', 'png')}`,
+            title: video.title,
+            description: video.description,
+            isVideo: false,  
+          };
+          return <CardC key={i} {...cardProps} />
+        })}
+      </Carousel>
+    }
     <Modal
       isOpen={true}
       timer={5000}

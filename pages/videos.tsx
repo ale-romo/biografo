@@ -52,8 +52,6 @@ const Objetos: NextPage = ({videos}:any) => {
             });
         break;
     }
-    console.log(sortMode);
-    console.log(videos[0].title);
     return videos;
   }
 
@@ -66,7 +64,7 @@ const Objetos: NextPage = ({videos}:any) => {
   let cards = [];
   for(let video of videos){
     cards.push({src:`https://biografoimaginario.com:8888/thumbs${video.videoURL.replace('.mp4', '.png')}`, 
-    title:video.title, description:video.description, action:`/video/${video.videoID}`})
+    title:video.title, description:video.description, action:() => { window.location.href = `/video/${video.videoID}`}})
   }
   return <>
         <select onChange={handleSelectChange}>
@@ -81,7 +79,7 @@ const Objetos: NextPage = ({videos}:any) => {
                 grid-template-columns: 1fr 1fr 1fr;
             }`}</style>
         {cards.map((input, index) => {
-        return <div key={index}><CardC src={input.src} title={input.title} description={input.description} isVideo={true}></CardC></div>
+        return <div key={index}><CardC src={input.src} title={input.title} description={input.description} isVideo={true} action={input.action}></CardC></div>
         })}
     </div>
   </>

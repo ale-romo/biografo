@@ -53,6 +53,7 @@ const Form =({ updateAction, deleteAction, method, item, id, users, videos, obje
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [formFields, setFormFields] = useState({})
     useEffect(() => {
+        console.log(inputValues);
         setFormFields(inputValues);
     }, []);
 
@@ -97,14 +98,14 @@ const Form =({ updateAction, deleteAction, method, item, id, users, videos, obje
         let specialFieldNames = {endDate: 'date', createdAt: 'date', description: 'textarea', history: 'textarea', timePublished: 'date'}
         let type = 'text';
         let dateRegex = /(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d+)/;
+        let name = fieldName;
         if(dateRegex.test(item[fieldName])){
             item[fieldName] = item[fieldName].split('T')[0];
         }
         if (fieldName in specialFieldNames){
             type = specialFieldNames[fieldName];
         }
-        if (fieldName.includes('name')){
-            let name = '';
+        if (fieldName.includes('name') || fieldName == 'vObjectID'){
             switch(fieldName){
                 case 'soldUsername':
                     name = 'soldUserID';
@@ -121,9 +122,12 @@ const Form =({ updateAction, deleteAction, method, item, id, users, videos, obje
             }
             let options = [];
             if(fieldName === 'vObjectID'){
+                if(item[fieldName] == null){
+                    inputValues[name] = 1;
+                }
                 for (let object in objects){
-                    if(objects[object] == item[fieldName]){
-                        options.push(<option value={object} selected>{`${object}. ${objects[object]}`}</option>)
+                    if(object == item[fieldName]){
+                        options.push(<option value={object} selected>{`${object}. ${objects[object]}`}</option>);
                         inputValues[name] = object;
                     } else {
                         options.push(<option value={object}>{`${object}. ${objects[object]}`}</option>)
@@ -149,8 +153,8 @@ const Form =({ updateAction, deleteAction, method, item, id, users, videos, obje
             }
 
             inputs.push(<div className={styles.fieldsDiv} >
-                <label>{fieldName.replace('name', 'ID')}</label>
-                <select  name={name} onChange={(e) => handleChange(fieldName.replace('name', 'ID'), e)}>
+                <label>{name}</label>
+                <select  name={name} onChange={(e) => handleChange(name, e)}>
                     {options.map((option) => {return <>{option}</>})}
                 </select>
             </div>);
@@ -188,7 +192,7 @@ const Form =({ updateAction, deleteAction, method, item, id, users, videos, obje
             inputValues[fieldName] = item[fieldName];
             inputs.push(<div className={styles.fieldsDiv} >
                 <label>{fieldName}</label>
-                <select  name='objectID' onChange={(e) => handleChange(fieldName, e)}>
+                <select  name='objectID' onChange={(e) => handleChange(name, e)}>
                     {options.map((option) => {return <>{option}</>})}
                 </select>
             </div>);

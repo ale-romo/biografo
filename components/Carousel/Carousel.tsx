@@ -86,8 +86,8 @@ interface NavProps {
 
 const NavButton = styled.button<NavProps>`
   opacity: ${p => p.active ? 1 : 0};
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   background: black;
   border:none;
   position: relative;

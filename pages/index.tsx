@@ -6,6 +6,8 @@ import Carousel from 'components/Carousel/Carousel';
 import Modal from 'components/Modal/Modal';
 import Card from 'components/Cards/CardB';
 import CardC from 'components/Cards/CardC';
+import Sticker from 'components/Sticker/Sticker';
+
 import {
   NegativeText,
   LargeText,
@@ -54,6 +56,7 @@ const HomePage = ({ items, videos }: any) => {
     });
   }
   return <>
+  <Sticker></Sticker>
     {items &&
       <Carousel title="Artículos destacados">
         {items.map((item: any, i: number) => {
@@ -80,25 +83,6 @@ const HomePage = ({ items, videos }: any) => {
         })}
       </Carousel>
     }
-    <Modal
-      isOpen={true}
-      timer={5000}
-      contentWidth="100%"
-      contentHeight="100%"
-      showCloseButton={false}
-    >
-      <ModalContent>
-        <p>el autor de esta página está <LargeText>en construcción</LargeText>, vende sus pertenencias a cambio de que reciclen su memoria.</p>
-        <p>todos los objetos aquí publicados están a la venta pero su precio no es dinero, sinó la invención de nuevos recuerdos.</p>
-        <p>hay increibles oportunidades a cero peso.</p>
-        <NegativeText>¡compra yá!</NegativeText>
-      </ModalContent>
-    </Modal>
-    <SectionWrapper>
-      <p>
-        Estos objetos están a la venta. Su precion n es dinero, sino la invención de nuevos recuerdos. ver <Link href='/acerca'><Link1>como funciona</Link1></Link>
-      </p>
-    </SectionWrapper>
   </>
 }
 

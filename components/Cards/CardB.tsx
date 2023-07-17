@@ -10,6 +10,8 @@ const StyledCard = styled.div`
   &:hover {
     background: #EFEFEF;
   }
+  margin-right: 35px;
+  margin-bottom: 55px;
 `;
 
 interface statusProps {

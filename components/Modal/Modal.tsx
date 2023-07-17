@@ -73,8 +73,13 @@ const Modal = ({
   showCloseButton = true,
 }: Props) => {
   const [open, setOpen] = useState(false);
-  useEscape(() => setOpen(false));
-
+  useEscape(() => setOpen(isOpen));
+  useEffect(() => {
+    setOpen(isOpen);
+    if(timer){
+      setTimeout(() => {setOpen(false)}, timer);
+    }
+  }, []);
   useEffect(() => {
     const body = document.querySelector('body');
     if (body) {
@@ -86,13 +91,6 @@ const Modal = ({
     }
   }, [open]);
 
-  useEffect(() => {
-    if (timer) {
-      setTimeout(() => {
-        setOpen(false);
-      }, timer);
-    }
-  });
   return <>
     {triggerText &&
       <Button action={() => setOpen(true)}>{triggerText}</Button>

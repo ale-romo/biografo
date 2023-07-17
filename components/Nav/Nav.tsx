@@ -18,6 +18,8 @@ const StyledHamburgerButton = styled.button<NavProps>`
   border: none;
   position: relative;
   padding: 10px;
+  transform: translateY(-50%);
+  top: 50%;
   z-index: 2;
   cursor: pointer;
   &:before, &:after {
@@ -43,9 +45,8 @@ const StyledHamburgerButton = styled.button<NavProps>`
 const StyledNav = styled.ul<NavProps>`
   width: 100%;
   left: ${p => p.active ? 0 : '-100%'};
-  height: 100%;
-  background: black;
-  color: white;
+  background: white;
+  color: black;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -53,7 +54,7 @@ const StyledNav = styled.ul<NavProps>`
   top: 0;
   z-index: 1;
   margin: 0;
-  transition: left 0.4s;
+  transition: top 0.4s;
   align-items: center;
   list-style: none;
   padding: 40px;
@@ -109,19 +110,19 @@ const Nav = (Props: Props) => {
   }
 
   return <>
-      <StyledNav active={active}>
+    <StyledNav active={active}>
       {Props.items.map((item: Item, i) => <li key={i}>
         <Link href={item.url} title={item.title}>
           <a href={item.url} onClick={() => setActive(false)}>{item.title}</a>
         </Link>
       </li>)}
     </StyledNav>
-    {username && <>
-      <div>Hola {username}</div>
-      {/* <Button action={() => logout()}>Cerrar sesión</Button> */}
-    </>
-    }
     <StyledHamburgerButton active={active} onClick={() => setActive(!active)} />
+    {/* {username && <>
+      <div>Hola {username}</div>
+      {/* <Button action={() => logout()}>Cerrar sesión</Button> }
+    </>
+    } */}
   </>
 }
 

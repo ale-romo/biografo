@@ -152,7 +152,7 @@ const BasicLayout = ({ children }: { children: any }) => {
       <Nav { ...navProps } />
       <div style={{position: "relative", top: "50%", transform: "translateY(-50%)", height: "fit-content"}}><h2 style={{textAlign:'right', fontSize:"28px", letterSpacing:"-1px;"}}>biógrafoImaginario</h2><p style={{fontSize:"15px", textAlign: "right", marginTop: "-30px", letterSpacing:"2px"}}>recambio automático de recuerdos</p></div>
     </StyledHeader>
-    <SectionWrapper style={{width: "fit-content", maxWidth: "1200px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop:"100px"}}>
+    <SectionWrapper style={{width: "100vw", maxWidth: "1200px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop:"100px"}}>
       <StyledContent>
         {children}
       </StyledContent>

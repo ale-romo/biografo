@@ -7,6 +7,7 @@ import * as d3 from 'd3';
 import {useState} from 'react';
 import EditVideoPlayer from 'components/EditVideo/EditVideoPlayer';
 import EditVideoSetter from 'components/EditVideo/EditVideoSetter';
+import { SectionWrapper } from 'components/TextFormats/TextFormats';
 // CONSTANTS //
 const MIN_OCCURRENCES = 12;
 const MIN_WORD_LENGTH = 8;
@@ -284,10 +285,10 @@ const HomePage = ({WordNodes}:Props) => {
   console.log(ans)
   // console.log(WordNodes);
   // console.log(WordNodes);
-  return <>
+  return <SectionWrapper style={{ width: "100vw", maxWidth: "1200px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
     <EditVideoSetter words={ans} callback={() => {}}></EditVideoSetter>
     <EditVideoPlayer source='https://biografoimaginario.com:8888/uploads/9/3/5/f/2f40-a426-4444-a079-509d36843dc3.mp4' timeEnd={2.2} timeStart={1}></EditVideoPlayer>
-  </>
+  </SectionWrapper>
 }
 
 export default HomePage;

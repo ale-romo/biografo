@@ -12,7 +12,7 @@ const Steps = styled.ul`
 `;
 
 const ComoFunciona: NextPage = () => {
-  return <SectionWrapper>
+  return <SectionWrapper style={{ width: "100vw", maxWidth: "1200px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
     <Steps>
       <li>
         <Image src="/images/step1.jpg" width={572} height={905}/>

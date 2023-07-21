@@ -8,13 +8,15 @@ interface wrapperProps {
   background: string;
 }
 
+let zIndexWrapper = 10;
+
 const Wrapper = styled.div<wrapperProps>`
   ${({ open, background }) => `
     opacity: ${open ? 1 : 0};
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 10;
+    z-index: ${zIndexWrapper};
     pointer-events: ${open ? 'auto' : 'none'};
     width: 100%;
     height: 100%;
@@ -59,6 +61,7 @@ interface Props {
   contentBackground?: string;
   timer?: number;
   showCloseButton?: boolean;
+  zIndex?: number;
 };
 
 const Modal = ({
@@ -71,6 +74,7 @@ const Modal = ({
   isOpen = false,
   timer = 0,
   showCloseButton = true,
+  zIndex = 10,
 }: Props) => {
   const [open, setOpen] = useState(false);
   useEscape(() => setOpen(isOpen));
@@ -90,7 +94,7 @@ const Modal = ({
       }
     }
   }, [open]);
-
+  zIndexWrapper = zIndex;
   return <>
     {triggerText &&
       <Button action={() => setOpen(true)}>{triggerText}</Button>

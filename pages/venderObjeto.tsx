@@ -1,10 +1,11 @@
 import { NextPage } from "next";
 import { LoginContext } from "components/User/userContext";
 import { useContext} from "react";
+import { SectionWrapper } from "components/TextFormats/TextFormats";
 
 const subirObjeto: NextPage = () => {
   let user = useContext(LoginContext);
-  return <>
+  return <SectionWrapper style={{ width: "100vw", maxWidth: "1200px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
   <form method="POST" action="https://biografoimaginario.com:8888/sell" encType="multipart/form-data">
     <input type="hidden" name="uid" value={user.userId} required={true}/>
     <label htmlFor="name">Nombre del objeto</label><input type="text" name="name" placeholder='Nombre del Objeto'  required={true}/><br/>
@@ -20,7 +21,7 @@ const subirObjeto: NextPage = () => {
     <label htmlFor='image'>Imagenes:  </label><input type='file' name='image'/><br/><br/>
     <button>Vender Objeto</button>
   </form>
-  </>
+  </SectionWrapper>
 };
 
 export default subirObjeto;

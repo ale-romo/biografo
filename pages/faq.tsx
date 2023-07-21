@@ -4,7 +4,7 @@ import { SectionWrapper } from 'components/TextFormats/TextFormats';
 
 const Faq: NextPage = () => {
   return (
-    <SectionWrapper>
+    <SectionWrapper style={{ width: "100vw", maxWidth: "1200px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
       <ul>
         <li>
           <h3>

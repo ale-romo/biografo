@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import CardC from 'components/Cards/CardC';
 import { useEffect, useState, useRef } from 'react';
-
+import { SectionWrapper } from "components/TextFormats/TextFormats";
 
 export const getStaticProps = async () => {
   const videoRes: any = await fetch(`https://biografoimaginario.com:8888/getAllVideos`);
@@ -66,7 +66,7 @@ const Objetos: NextPage = ({videos}:any) => {
     cards.push({src:`https://biografoimaginario.com:8888/thumbs${video.videoURL.replace('.mp4', '.png')}`, 
     title:video.title, description:video.description, action:() => { window.location.href = `/video/${video.videoID}`}})
   }
-  return <>
+  return <SectionWrapper style={{ width: "100vw", maxWidth: "1200px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
         <select onChange={handleSelectChange}>
             <option value='reverseChronological' selected>Más Reciente Primero</option>
             <option value='chronological'>Menos Reciente Primero</option>
@@ -82,7 +82,7 @@ const Objetos: NextPage = ({videos}:any) => {
         return <div key={index}><CardC src={input.src} title={input.title} description={input.description} isVideo={true} action={input.action}></CardC></div>
         })}
     </div>
-  </>
+  </SectionWrapper>
 };
 
 export default Objetos;

@@ -26,7 +26,7 @@ const Sticker = () => {
 		window.addEventListener("scroll", onScroll )
 	}, [])
 
-	let topPos = '15%';
+	let topPos = '20%';
 	let transformVar = '0turn';
 	let stickerOpacity = 1;
 	let stickerAltOpacity = 0;
@@ -36,7 +36,7 @@ const Sticker = () => {
 		stickerOpacity = 0;
 		stickerAltOpacity = 1;
 	}
-	console.log(topPos)
+	console.log(topPos);
 
 	return <div style={{position: "fixed", top: topPos, right: '3vw', zIndex:'9', transition: "top 0.75s ease-in-out"}}>
 		<Content>

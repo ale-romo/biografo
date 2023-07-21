@@ -8,6 +8,8 @@ import Card from 'components/Cards/CardB';
 import CardC from 'components/Cards/CardC';
 import Sticker from 'components/Sticker/Sticker';
 
+import { useEffect } from 'react';
+
 import {
   NegativeText,
   LargeText,
@@ -25,6 +27,13 @@ const ModalContent = styled.div`
   padding: 0 15%;
 `;
 
+function shuffleArray(array: string[]) {
+  for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
 export const getStaticProps = async () => {
   const res: any = await fetch('https://biografoimaginario.com:8888/getAllObjects');
   const data = await res.json();
@@ -40,6 +49,9 @@ export const getStaticProps = async () => {
   );
   const videoRes: any = await fetch(`https://biografoimaginario.com:8888/getAllVideos`);
   const videoData = await videoRes.json();
+  
+  shuffleArray(videoData);
+  shuffleArray(itemsWithImageSizes);
 
   return {
     props: {
@@ -55,8 +67,14 @@ const HomePage = ({ items, videos }: any) => {
       pathname: `/objeto/${item.objectID}`,
     });
   }
-  return <>
+  const sendVideoProps = (video: any) => {
+    Router.push({
+      pathname: `/video/${video.videoID}`,
+    });
+  }
+  return 			<SectionWrapper style={{ width: "100vw", maxWidth: "1200px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
   <Sticker></Sticker>
+  <span>Estos artículos están a la venta. <span style={{color: 'white', background: 'black'}}>Su precio no es dinero</span>, sino recuerdos para el <span style={{fontFamily:"\"futura-pt\",sans-serif", letterSpacing: "-1px", fontSize: "1.5rem"}}>biógrafoImaginario</span></span>
     {items &&
       <Carousel title="Artículos destacados">
         {items.map((item: any, i: number) => {
@@ -77,13 +95,14 @@ const HomePage = ({ items, videos }: any) => {
             src: `https://biografoimaginario.com:8888/thumbs${video.videoURL.replace('mp4', 'png')}`,
             title: video.title,
             description: video.description,
+            action: () => sendVideoProps(video),
             isVideo: false,  
           };
           return <CardC key={i} {...cardProps} />
         })}
       </Carousel>
     }
-  </>
+  </SectionWrapper>
 }
 
 export default HomePage;

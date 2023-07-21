@@ -6,15 +6,20 @@ interface Props {
 	cookieName: string;
 	test?: boolean;
 	reset?: boolean;
+	expires?: any;
 }
 
-const CookieChecker: React.FC<Props> = ({ cookieName, children, test=false, reset=false}) => {
+const CookieChecker: React.FC<Props> = ({ cookieName, children, test=false, reset=false, expires=0}) => {
 	const [showDiv, setShowDiv] = useState(false);
 
 	useEffect(() => {
 		const hasCookie = !!cookie.get(cookieName);
 		if(!hasCookie || test){
-			cookie.set(cookieName, 'true', {expires: 28});
+			if(expires != 0){
+				cookie.set(cookieName, 'true', {expires: expires});
+			} else {
+				cookie.set(cookieName, "true");
+			}
 			setShowDiv(true);
 		}
 	}, []);

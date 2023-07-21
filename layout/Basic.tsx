@@ -118,33 +118,64 @@ const BasicLayout = ({ children }: { children: any }) => {
 	/**************************** */
 	const [hasCookie, setCookie] = useState(false);
 	const [hasFailed, setFailed] = useState(false);
+	const [hasSeenLanding, setSeenLanding] = useState(false);
 
 	useEffect(() => {
 		if(!!cookie.get(COOKIENAME)){
 			setCookie(true);
 		}
+		let keyDownHandler = (event:any) => {
+			if(event && event.key === "Enter"){
+				event.preventDefault();
+				let text = document.querySelector("input")?.value;
+				if(text && text == COOKIENAME){
+					cookie.set(text, 'true', {expires:new Date(new Date().getTime() + 15 * 60 * 1000)});
+					setCookie(true);
+				} else {
+					setFailed(true);
+				}
+			}
+		}
+		document.querySelector('input')?.addEventListener('keydown', keyDownHandler);
 	},[]);
 	
 	if(!hasCookie){
+		let validationFunction = () => {
+			let text = document.querySelector("input")?.value;
+			if(text && text == COOKIENAME){
+				cookie.set(text, 'true', {expires:new Date(new Date().getTime() + 15 * 60 * 1000)});
+				setCookie(true);
+			} else {
+				setFailed(true);
+			}
+		};
 		return <div style={{width: "100vw", height: "100vh", position: "relative"}}>
 		<div style={{position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)"}}>
 			<div style={{position: "relative", left: "50%", transform: "translateX(-50%)", width: "fit-content"}}>
 					<input type="password" placeholder="contraseña" style={{padding: "7px"}}></input> <button type="button" style={{border: "1px solid black", padding:"8px 12px", background:"white"}}
-					onClick={() => {
-					let text = document.querySelector("input")?.value;
-					if(text && text == COOKIENAME){
-						cookie.set(text, 'true');
-						setCookie(true);
-					} else {
-						setFailed(true);
-					}
-				}}>ingresar</button>
+					onClick={validationFunction}>ingresar</button>
 				{hasFailed && <p style={{color:"red", textAlign: "center"}}>constraseña equivocada</p>}
 			</div>
 			<br/>
-			<p style={{textAlign:"center"}}>¿quieres saber más del proyecto? envía un email a <span style={{fontSize: "1.2rem", fontWeight: "700"}}>biografoimaginario@gmail.com</span></p>
+			<p style={{textAlign:"center"}}><span style={{fontSize: "1.2rem", fontWeight: "700"}}>biografoimaginario@gmail.com</span></p>
 		</div>
 	</div>
+	}
+
+	if(!hasSeenLanding){
+		return <div style={{width: "100vw", height: "100vw", position:"fixed", zIndex: "1000", background: "white", marginTop: "-48px"}}>
+		<div style={{padding: "128px 0 0 50%"}}>
+			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px"}}>> dossier</a><br style={{marginBottom: "28px"}}/>
+			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px"}}>> prensa - textos conceptuales</a><br style={{marginBottom: "28px"}}/>
+			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px"}}>> fotos - diseños</a><br style={{marginBottom: "28px"}}/>
+			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px"}}>> diseño gráfico de la web</a><br style={{marginBottom: "28px"}}/>
+			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px"}}>> equipo</a><br style={{marginBottom: "28px"}}/>
+			<a onClick={() => {
+				setSeenLanding(true);
+			}} style={{fontWeight: "700", cursor:"pointer"}}>> prototipo de la web en desarrollo</a><br style={{marginBottom: "28px"}}/><br style={{marginBottom: "28px"}}/>
+      <p>biografoimaginario@gmail.com</p>
+		</div>
+	</div>;
 	}
 
 	/**************************** */
@@ -155,7 +186,7 @@ const BasicLayout = ({ children }: { children: any }) => {
 		<>
 			<GlobalStyle />
 			<link rel="stylesheet" href="https://use.typekit.net/xhf3zhn.css"></link>
-			<OpenOnce cookieName='startupModal' test={false}>
+			<OpenOnce cookieName='startupModal' test={false} expires={new Date(new Date().getTime() + 45 * 60 * 1000)}>
 				<Modal
 					isOpen={true}
 					timer={20700}
@@ -195,6 +226,12 @@ const BasicLayout = ({ children }: { children: any }) => {
 			</StyledHeader>
 			<div style={{height: "48px"}}></div>
 			{children}
+			<div style={{position: "fixed", top: "150px", left: "5vw", zIndex:"999"}}>
+				<div style={{background: "red", padding: "2px 6px"}}><p style={{color: "white", fontWeight: "700"}}> &nbsp;prototipo del sitio en construcción&nbsp; </p></div>
+				<a onClick={() => {
+					setSeenLanding(false);
+				}}><div style={{background: "blue", padding: "2px 6px", cursor: "pointer"}}><p style={{color: "white", fontWeight: "700"}}> &nbsp;home del proyecto&nbsp; </p></div></a>
+			</div>
 		</>
 	);
 };

@@ -28,13 +28,13 @@ const ModalContent = styled.div`
 
 const Landing = () => {
 	return <div style={{width: "100vw", height: "100vw", position:"fixed", zIndex: "1000", background: "white", marginTop: "-48px"}}>
-		<div style={{padding: "13.5% 0 0 50%"}}>
-			<a href="biografoImaginario.pdf" style={{textDecoration:"underline", fontWeight: "700"}}>> dossier</a><br style={{marginBottom: "3.5%"}}/>
-			<a href="biografoImaginario.pdf" style={{textDecoration:"underline", fontWeight: "700"}}>> prensa - textos conceptuales</a><br style={{marginBottom: "3.5%"}}/>
-			<a href="biografoImaginario.pdf" style={{textDecoration:"underline", fontWeight: "700"}}>> fotos - diseños</a><br style={{marginBottom: "3.5%"}}/>
-			<a href="biografoImaginario.pdf" style={{textDecoration:"underline", fontWeight: "700"}}>> diseño gráfico de la web</a><br style={{marginBottom: "3.5%"}}/>
-			<a href="biografoImaginario.pdf" style={{textDecoration:"underline", fontWeight: "700"}}>> equipo</a><br style={{marginBottom: "3.5%"}}/>
-			<a href="/" style={{textDecoration:"underline", fontWeight: "700"}}>> prototipo de la web en desarrollo</a><br style={{marginBottom: "3.5%"}}/><br style={{marginBottom: "3.5%"}}/>
+		<div style={{padding: "128px 0 0 50%"}}>
+			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px"}}>> dossier</a><br style={{marginBottom: "28px"}}/>
+			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px"}}>> prensa - textos conceptuales</a><br style={{marginBottom: "28px"}}/>
+			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px"}}>> fotos - diseños</a><br style={{marginBottom: "28px"}}/>
+			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px"}}>> diseño gráfico de la web</a><br style={{marginBottom: "28px"}}/>
+			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px"}}>> equipo</a><br style={{marginBottom: "28px"}}/>
+			<a href="/" style={{fontWeight: "700"}}>> prototipo de la web en desarrollo</a><br style={{marginBottom: "28px"}}/><br style={{marginBottom: "28px"}}/>
       <p>biografoimaginario@gmail.com</p>
 		</div>
 	</div>;

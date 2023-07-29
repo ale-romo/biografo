@@ -1,3 +1,5 @@
+const IS_IN_DEV_MODE = true;
+
 import styled, { createGlobalStyle } from "styled-components";
 import Nav from "components/Nav/Nav";
 import OpenOnce from "components/OpenOnce/OpenOnce";
@@ -57,11 +59,11 @@ const StyledHeader = styled.header`
   flex-direction: row;
   justify-content: space-between;
   position: fixed;
-  top: 0;
+  top: ${!IS_IN_DEV_MODE ? '0' : '42px'};
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
-  max-width: 1200px;
+  width: calc(100% - 100px);
+  max-width: 1700px;
   z-index:2;
 	height: 120px;
 ;`
@@ -165,11 +167,11 @@ const BasicLayout = ({ children }: { children: any }) => {
 	if(!hasSeenLanding){
 		return <div style={{width: "100vw", height: "100vw", position:"fixed", zIndex: "1000", background: "white", marginTop: "-48px"}}>
 		<div style={{padding: "128px 0 0 50%"}}>
-			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px"}}>> dossier</a><br style={{marginBottom: "28px"}}/>
-			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px"}}>> prensa - textos conceptuales</a><br style={{marginBottom: "28px"}}/>
-			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px"}}>> fotos - diseños</a><br style={{marginBottom: "28px"}}/>
-			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px"}}>> diseño gráfico de la web</a><br style={{marginBottom: "28px"}}/>
-			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px"}}>> equipo</a><br style={{marginBottom: "28px"}}/>
+			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px", display:"inline-block"}}>> dossier</a><br style={{marginBottom: "28px"}}/>
+			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px", display:"inline-block"}}>> prensa - textos conceptuales</a><br style={{marginBottom: "28px"}}/>
+			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px", display:"inline-block"}}>> fotos - diseños</a><br style={{marginBottom: "28px"}}/>
+			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px", display:"inline-block"}}>> diseño gráfico de la web</a><br style={{marginBottom: "28px"}}/>
+			<a href="biografoImaginario.pdf" style={{fontWeight: "700", marginBottom: "28px", display:"inline-block"}}>> equipo</a><br style={{marginBottom: "28px"}}/>
 			<a onClick={() => {
 				setSeenLanding(true);
 			}} style={{fontWeight: "700", cursor:"pointer"}}>> prototipo de la web en desarrollo</a><br style={{marginBottom: "28px"}}/><br style={{marginBottom: "28px"}}/>
@@ -224,13 +226,13 @@ const BasicLayout = ({ children }: { children: any }) => {
 				<Nav {...navProps} />
 				<div style={{ position: "relative", top: "50%", transform: "translateY(-50%)", height: "fit-content" }}><h2 style={{ textAlign: 'right', fontSize: "28px", letterSpacing: "-1px;" }}>biógrafoImaginario</h2><p style={{ fontSize: "15px", textAlign: "right", marginTop: "-30px", letterSpacing: "2px" }}>recambio automático de recuerdos</p></div>
 			</StyledHeader>
-			<div style={{height: "48px"}}></div>
+			<div style={{height: `${IS_IN_DEV_MODE? (48+42)+'px':"48px"}`}}></div>
 			{children}
-			<div style={{position: "fixed", top: "150px", left: "5vw", zIndex:"999"}}>
-				<div style={{background: "red", padding: "2px 6px"}}><p style={{color: "white", fontWeight: "700"}}> &nbsp;prototipo del sitio en construcción&nbsp; </p></div>
+			<div style={{position: "fixed", top: "0", left: "0", zIndex:"999", height: "fit-content", width: "100vw", overflow: "hidden"}}>
+				<div style={{background: "red", width: "100%", textAlign: "center", margin: "0"}}><p style={{color: "white", fontWeight: "700", margin: "0"}}> &nbsp;prototipo del sitio en construcción&nbsp; </p></div>
 				<a onClick={() => {
 					setSeenLanding(false);
-				}}><div style={{background: "blue", padding: "2px 6px", cursor: "pointer"}}><p style={{color: "white", fontWeight: "700"}}> &nbsp;home del proyecto&nbsp; </p></div></a>
+				}}><div style={{background: "red", width: "100%", textAlign: "center", cursor: "pointer", margin: "0", height: "fit-content"}}><p style={{color: "white", fontWeight: "700", margin: "0"}}> >&nbsp;home del proyecto&nbsp; </p></div></a>
 			</div>
 		</>
 	);

@@ -72,7 +72,7 @@ const HomePage = ({ items, videos }: any) => {
       pathname: `/video/${video.videoID}`,
     });
   }
-  return 			<SectionWrapper style={{ width: "100vw", maxWidth: "1200px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
+  return 			<SectionWrapper style={{ width: "100vw", maxWidth: "1700px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
   <Sticker></Sticker>
   <span>Estos artículos están a la venta. <span style={{color: 'white', background: 'black'}}>Su precio no es dinero</span>, sino recuerdos para el <span style={{fontFamily:"\"futura-pt\",sans-serif", letterSpacing: "-1px", fontSize: "1.5rem"}}>biógrafoImaginario</span></span>
     {items &&
@@ -96,7 +96,7 @@ const HomePage = ({ items, videos }: any) => {
             title: video.title,
             description: video.description,
             action: () => sendVideoProps(video),
-            isVideo: false,  
+            isVideo: true,  
           };
           return <CardC key={i} {...cardProps} />
         })}

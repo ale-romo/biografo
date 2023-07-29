@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import VideoRecorder from 'components/Webcam/Webcam'
 import { LargeText } from 'components/TextFormats/TextFormats';
 import Button from "components/Button/Button";
+import { SectionWrapper } from "components/TextFormats/TextFormats";
 
 
 export const getStaticPaths = async () => {
@@ -38,7 +39,8 @@ const UploadObjeto: NextPage = ({item, pid}: any) => {
     item = {title:'cargando...'}
   } 
   if('error' in item){
-    return <div className='errorText'>
+  return <SectionWrapper style={{ width: "100vw", maxWidth: "1700px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
+  <div className='errorText'>
       <LargeText><b>Error:</b> No encontramos el objeto que buscas.</LargeText><br/><br/>
       <Button action={'/'}>Regresar</Button>
       <style >{`
@@ -48,8 +50,11 @@ const UploadObjeto: NextPage = ({item, pid}: any) => {
       }
       </style>
     </div>
+    </SectionWrapper>
   }
   return <>
+  <SectionWrapper style={{ width: "100vw", maxWidth: "1700px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
+
     <div>
       <style >{`
         .titleText{
@@ -63,6 +68,7 @@ const UploadObjeto: NextPage = ({item, pid}: any) => {
       <br/>
       <VideoRecorder objectid={pid} uid={'1'}></VideoRecorder>
     </div>
+  </SectionWrapper>
   </>
 };
 

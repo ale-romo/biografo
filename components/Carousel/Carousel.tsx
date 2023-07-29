@@ -160,6 +160,7 @@ const Carousel = ({ title, children }: Props) => {
       if(direction === 'right') {
         if (currentPos + window.innerWidth < carousel.current.scrollWidth - window.innerWidth) {
           scrollTo = currentPos + window.innerWidth;
+          console.log('test');
         } else {
           scrollTo = carousel.current.scrollWidth - window.innerWidth;
         }

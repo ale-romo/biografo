@@ -61,7 +61,7 @@ const Objetos: NextPage = ({items}:any) => {
   for(let item of items){
     cards.push({src:`https://biografoimaginario.com:8888/${JSON.parse(item.images)[0]}`, title:item.title, description:item.description, sold:item.soldVideoID!='-1', action:`/objeto/${item.objectID}`})
   }
-  return <SectionWrapper style={{ width: "100vw", maxWidth: "1200px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
+  return <SectionWrapper style={{ width: "100vw", maxWidth: "1700px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
         <select onChange={handleSelectChange}>
             <option value='reverseChronological' selected>Más Reciente Primero</option>
             <option value='chronological'>Menos Reciente Primero</option>

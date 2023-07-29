@@ -66,7 +66,7 @@ const Objetos: NextPage = ({videos}:any) => {
     cards.push({src:`https://biografoimaginario.com:8888/thumbs${video.videoURL.replace('.mp4', '.png')}`, 
     title:video.title, description:video.description, action:() => { window.location.href = `/video/${video.videoID}`}})
   }
-  return <SectionWrapper style={{ width: "100vw", maxWidth: "1200px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
+  return <SectionWrapper style={{ width: "100vw", maxWidth: "1700px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
         <select onChange={handleSelectChange}>
             <option value='reverseChronological' selected>Más Reciente Primero</option>
             <option value='chronological'>Menos Reciente Primero</option>

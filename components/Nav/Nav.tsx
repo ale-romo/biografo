@@ -43,8 +43,9 @@ const StyledHamburgerButton = styled.button<NavProps>`
 `;
 
 const StyledNav = styled.ul<NavProps>`
-  width: 100%;
-  left: ${p => p.active ? 0 : '-100%'};
+  width: 100vw;
+  left: ${p => p.active ? 0 : '-200vw'};
+  max-width: 1700px;
   background: white;
   color: black;
   display: flex;

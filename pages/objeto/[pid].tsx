@@ -9,6 +9,7 @@ import Session from "components/User/Session";
 import Carousel from "components/Carousel/Carousel";
 import { LoginContext } from "components/User/userContext";
 import URL_QR from "components/URL_QR/URL_QR";
+import { SectionWrapper } from "components/TextFormats/TextFormats";
 
 const Loader = styled.div`
   width: 100%;
@@ -75,6 +76,7 @@ const PerfilObjeto: NextPage = ({ item, video }: any) => {
 
 
   return <>
+  <SectionWrapper style={{ width: "100vw", maxWidth: "1700px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
     {item &&
       <>
         <Carousel title={item.title}>
@@ -113,6 +115,7 @@ const PerfilObjeto: NextPage = ({ item, video }: any) => {
         </Form>
       </>
     }
+    </SectionWrapper>
   </>
 };
 

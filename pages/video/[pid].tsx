@@ -9,7 +9,7 @@ import Session from "components/User/Session";
 import Carousel from "components/Carousel/Carousel";
 import { LoginContext } from "components/User/userContext";
 import URL_QR from "components/URL_QR/URL_QR";
-
+import { SectionWrapper } from "components/TextFormats/TextFormats";
 const Loader = styled.div`
   width: 100%;
   padding: 100%;
@@ -73,6 +73,8 @@ const PerfilVideo: NextPage = ({ video, pid }: any) => {
   }
 
   return <>
+  <SectionWrapper style={{ width: "100vw", maxWidth: "1700px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
+
     {video &&
       <>
         {videoElement}
@@ -81,6 +83,7 @@ const PerfilVideo: NextPage = ({ video, pid }: any) => {
         <br></br>
       </>
     }
+  </SectionWrapper>
   </>
 };
 

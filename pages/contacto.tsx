@@ -18,7 +18,7 @@ const Contacto: NextPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  return <SectionWrapper style={{ width: "100vw", maxWidth: "1200px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
+  return <SectionWrapper style={{ width: "100vw", maxWidth: "1700px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>7
     <Form>
       <input type="text" value={name} onChange={(e) => setName(e.target.value)}placeholder="Nombre" />
       <input type="text" value={email} onChange={(e) => setEmail(e.target.value)}placeholder="Email" />

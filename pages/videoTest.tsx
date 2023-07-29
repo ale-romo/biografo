@@ -285,7 +285,7 @@ const HomePage = ({WordNodes}:Props) => {
   console.log(ans)
   // console.log(WordNodes);
   // console.log(WordNodes);
-  return <SectionWrapper style={{ width: "100vw", maxWidth: "1200px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
+  return <SectionWrapper style={{ width: "100vw", maxWidth: "1700px", position: "relative", left: "50%", transform: "translateX(-50%)", paddingTop: "100px" }}>
     <EditVideoSetter words={ans} callback={() => {}}></EditVideoSetter>
     <EditVideoPlayer source='https://biografoimaginario.com:8888/uploads/9/3/5/f/2f40-a426-4444-a079-509d36843dc3.mp4' timeEnd={2.2} timeStart={1}></EditVideoPlayer>
   </SectionWrapper>

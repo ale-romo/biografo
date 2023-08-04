@@ -120,6 +120,7 @@ const BasicLayout = ({ children }: { children: any }) => {
 	/**************************** */
 	const [hasCookie, setCookie] = useState(false);
 	const [hasFailed, setFailed] = useState(false);
+	const [hasTextShown, setTextShown] = useState(false);
 	const [hasSeenLanding, setSeenLanding] = useState(false);
 
 	useEffect(() => {
@@ -163,7 +164,25 @@ const BasicLayout = ({ children }: { children: any }) => {
 		</div>
 	</div>
 	}
-
+	if(!hasTextShown){
+		return <div style={{width: "100vw", height: "100vw", position:"fixed", zIndex: "1000", background: "white", marginTop: "-48px"}}>
+		<div style={{textAlign: "center", paddingTop: "140px", width:"fit-content", position: "absolute", top: "18%", left: "50%", transform: "translate(-50%, -50%)"}}>
+			<div>
+				<h2 style={{fontWeight: "700", fontFamily: "\"futura-pt\", sans-serif", fontSize: "28px", marginBottom: '-20px'}}>biógrafoImaginario</h2>
+				<p style={{fontSize: "1.3rem", marginBottom: "45px"}}>o proyecto automático de recambio de recuerdos</p>
+				<p style={{marginBottom: "-12px"}}>propone desprenderse de los objetos,</p>
+				<p style={{marginBottom: "-12px"}}>desprenderse de los recuerdos,</p>
+				<p style={{marginBottom: "-12px"}}>desprenderse de la elección del encuadre,</p>
+				<p style={{marginBottom: "-12px"}}>del criterio de selección, de la edición,</p>
+				<p style={{marginBottom: "-12px"}}>y del punto de vista</p>
+				<p style={{fontSize: "1.15rem"}}>para la creación automática de una pelicula autobiográfica.</p>
+				<a onClick={() => {
+					setTextShown(true);
+				}} style={{fontWeight: "700", fontSize: "1.5rem", cursor:"pointer", textAlign: "right", width: "100%", display:"block"}}>>>></a><br style={{marginBottom: "28px"}}/><br style={{marginBottom: "28px"}}/>
+			</div>
+		</div>
+	</div>;
+	}
 	if(!hasSeenLanding){
 		return <div style={{width: "100vw", height: "100vw", position:"fixed", zIndex: "1000", background: "white", marginTop: "-48px"}}>
 		<div style={{padding: "128px 0 0 50%"}}>
